@@ -6,8 +6,10 @@ import {
 import Home from "./pages/Home";
 import Results from './pages/Results'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import React, { useState } from 'react'
 import { SearchContext } from './context/search'
+import SingleView from "./pages/SingleView";
 
 function App() {
   const [animeData, setAnimeData] = useState([])
@@ -23,11 +25,10 @@ function App() {
 
   const search = (searchTerm) => {
     return fetch(
-      `https://api.jikan.moe/v4/anime?q=${searchTerm}&limit=15`
+      `https://api.jikan.moe/v4/anime?q=${searchTerm}`
     )
     .then(response => response.json())
   }
-
   return (
     <div>
       <SearchContext.Provider value={{search, animeData, setData, singleData, setSingle}}>
@@ -36,8 +37,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/results" element={<Results/>}/>
+          <Route path="/anime" element={<SingleView/>}/>
         </Routes>
       </BrowserRouter>
+      <Footer/>
       </SearchContext.Provider>
     </div>
   );

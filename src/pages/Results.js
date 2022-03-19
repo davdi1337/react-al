@@ -1,5 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { SearchContext } from "../context/search";
+import { AnimeList } from "../components/AnimeList";
+import { Text } from "@chakra-ui/react";
 
 const Results = () => {
   const search = useContext(SearchContext);
@@ -15,14 +17,11 @@ const Results = () => {
       }
     }
   }, [search]);
-  console.log("YES");
+  //console.log("YES");
   return (
     <div>
-      {(dataExists &&
-        search.animeData.map(({ images }) => (
-          <img src={images.jpg.image_url} />
-        ))) ||
-        "Data does not exists"}
+      {(dataExists && <AnimeList data={search.animeData}/>) ||
+        <Text>Data not exist</Text>}
     </div>
   );
 };
