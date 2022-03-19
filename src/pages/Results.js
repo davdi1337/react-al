@@ -7,7 +7,7 @@ const Results = () => {
   useEffect(() => {
     if (search.animeData === undefined || search.animeData.length === 0) {
       try {
-        search.setData(JSON.parse(localStorage.getItem("myData")));
+        search.animeData = JSON.parse(localStorage.getItem("myData"));
         setDataExists(true);
       } catch (error) {
         console.log(error);
@@ -15,7 +15,16 @@ const Results = () => {
       }
     }
   }, [search]);
-  return <div>{(dataExists && "Data Exist") || "Data does not exists"}</div>;
+  console.log("YES");
+  return (
+    <div>
+      {(dataExists &&
+        search.animeData.map(({ images }) => (
+          <img src={images.jpg.image_url} />
+        ))) ||
+        "Data does not exists"}
+    </div>
+  );
 };
 
 export default Results;
