@@ -18,7 +18,7 @@ const Home = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     search.search(input).then((res) => {
-      search.setData(res.data);
+      search.animeData = res.data;
       localStorage.setItem("myData", JSON.stringify(res.data));
       navigate("/results");
     });
