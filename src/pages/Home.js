@@ -21,6 +21,7 @@ const Home = () => {
       search.setData(res.data);
       localStorage.setItem("myData", JSON.stringify(res.data));
       navigate("/results");
+      console.log(res)
     });
   };
   return (

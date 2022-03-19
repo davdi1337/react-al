@@ -8,7 +8,6 @@ import Results from './pages/Results'
 import Navbar from './components/Navbar'
 import React, { useState } from 'react'
 import { SearchContext } from './context/search'
-import axios from 'axios'
 
 function App() {
   const [animeData, setAnimeData] = useState([])
@@ -24,7 +23,7 @@ function App() {
 
   const search = (searchTerm) => {
     return fetch(
-      `https://api.jikan.moe/v4/anime?q=${searchTerm}`
+      `https://api.jikan.moe/v4/anime?q=${searchTerm}&limit=15`
     )
     .then(response => response.json())
   }

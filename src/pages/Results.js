@@ -3,7 +3,7 @@ import { SearchContext } from "../context/search";
 
 const Results = () => {
   const search = useContext(SearchContext);
-  const [dataExists, setDataExists] = useState(true);
+  const [dataExists, setDataExists] = useState([]);
   useEffect(() => {
     if (search.animeData === undefined || search.animeData.length === 0) {
       try {
