@@ -1,6 +1,6 @@
 import { Box, Flex, Input, InputGroup, InputRightElement, useColorModeValue, Link, IconButton } from '@chakra-ui/react'
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { SearchContext } from "../context/search";
 import SwitchButton from './SwitchButton'
 import { FaSearch } from 'react-icons/fa'
@@ -10,7 +10,7 @@ function Navbar() {
     
     const search = useContext(SearchContext);
     const [input, setInput] = useState("");
-    const navigate = useNavigate();
+    const navigate = useHistory();
 
     const handleSearch = (event) => {
         event.preventDefault();

@@ -14,12 +14,12 @@ import { useContext, useState } from "react";
 import { SearchContext } from "../context/search";
 import React from "react";
 import { FaStar } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const AnimeList = () => {
   const search = useContext(SearchContext);
   const tagbg = useColorModeValue("blue", "purple");
-  const navigate = useNavigate();
+  const navigate = useHistory();
 
   const [data, setData] = useState([]);
 
