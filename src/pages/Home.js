@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
-import {
-  Grid, Heading
-} from "@chakra-ui/react";
-import TopAnime from '../components/TopAnime'
+import { Grid, Heading } from "@chakra-ui/react";
+import TopAnime from "../components/TopAnime";
 
 const Home = () => {
   const search = useContext(SearchContext);
@@ -17,13 +15,20 @@ const Home = () => {
       search.animeData = res.data;
       localStorage.setItem("myData", JSON.stringify(res.data));
       navigate("/results");
-      console.log(res)
     });
   };
   return (
-    <Grid display="flex" flexDirection="column" justifyContent="center" alignItems="center" minH="400px">
-      <Heading mt="100px" display="flex" justifyContent="center" w="100%">Top Animes</Heading>
-        <TopAnime/>
+    <Grid
+      display="flex"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      minH="400px"
+    >
+      <Heading mt="100px" display="flex" justifyContent="center" w="100%">
+        Top Animes
+      </Heading>
+      <TopAnime />
     </Grid>
   );
 };

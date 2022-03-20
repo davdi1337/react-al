@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { SearchContext } from '../context/search';
-import { Box, Image } from '@chakra-ui/react'
+import React, { useContext, useEffect, useState } from "react";
+import { SearchContext } from "../context/search";
+import { Box, Image } from "@chakra-ui/react";
 
 export const SingleAnime = () => {
-    const search = useContext(SearchContext);
-    console.log(search.animeData)
+  const search = useContext(SearchContext);
   return (
     <Box mt="100px">
-      {search.animeData.map(({ images, mal_id }) => (
-        <Image key={mal_id} src={images.jpg.image_url}></Image>
-      ))}
+      <Image src={search.singleData.data.images.jpg.image_url} />
     </Box>
-  )
-}
+  );
+};
