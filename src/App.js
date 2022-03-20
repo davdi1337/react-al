@@ -34,7 +34,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
-            <Route exact path="/anime" element={<SingleAnime />} />
+            <Route exact path={`/anime/:id`} element={<SingleAnime />} />
           </Routes>
         </BrowserRouter>
         <Footer />
