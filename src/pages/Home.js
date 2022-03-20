@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
 import { Grid, Heading } from "@chakra-ui/react";
 import TopAnime from "../components/TopAnime";
+import TopManga from "../components/TopManga";
 
 const Home = () => {
   const search = useContext(SearchContext);
   const [input, setInput] = useState("");
-  const navigate = useHistory();
+  const navigate = useNavigate();
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -29,6 +30,10 @@ const Home = () => {
         Top Animes
       </Heading>
       <TopAnime />
+      <Heading mt="100px" display="flex" justifyContent="center" w="100%">
+        Top Mangas
+      </Heading>
+      <TopManga />
     </Grid>
   );
 };

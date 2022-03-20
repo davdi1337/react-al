@@ -9,21 +9,22 @@ import {
   TagLabel,
   Text,
   Spinner,
+  Link,
   TagLeftIcon,
 } from "@chakra-ui/react";
 import { FaStar, FaHashtag } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
-function TopAnime() {
+function TopManga() {
   const [data, setData] = useState([]);
   const tagbg = useColorModeValue("blue", "purple");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://api.jikan.moe/v4/top/anime")
+    fetch("https://api.jikan.moe/v4/top/manga")
       .then((response) => response.json())
       .then((json) => {
-        //console.log(json);
+        console.log(json);
         setData(json.data);
       })
       .catch((error) => {
@@ -39,15 +40,15 @@ function TopAnime() {
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
       >
         <Flex flexWrap="wrap" justifyContent="center" mt="50px" gap="5">
-          {data.map((anime) => (
+          {data.map((manga) => (
             <Flex
               flexDirection="column"
               alignItems="center"
               w="250px"
-              key={anime.mal_id}
+              key={manga.mal_id}
               borderWidth="1px"
               justifyContent="space-between"
               borderRadius="md"
@@ -55,24 +56,25 @@ function TopAnime() {
               p="2"
               gap="1"
             >
-              <Image
-                w="200px"
-                h="300px"
-                objectFit="cover"
-                key={anime.mal_id}
-                src={anime.images.jpg.image_url}
-                borderRadius="md"
-              ></Image>
-              <Text key={anime.title}>{anime.title}</Text>
-
+              <Link href={manga.url} target="_blank">
+                <Image
+                  w="200px"
+                  h="300px"
+                  objectFit="cover"
+                  key={manga.mal_id}
+                  src={manga.images.jpg.image_url}
+                  borderRadius="md"
+                ></Image>
+              </Link>
+              <Text key={manga.title}>{manga.title}</Text>
               <Flex gap="2">
                 <Tag colorScheme={tagbg} size="md">
                   <TagLeftIcon as={FaHashtag}></TagLeftIcon>
-                  <TagLabel>{anime.rank}</TagLabel>
+                  <TagLabel>{manga.rank}</TagLabel>
                 </Tag>
                 <Tag colorScheme={tagbg} size="md">
                   <TagLeftIcon as={FaStar}></TagLeftIcon>
-                  <TagLabel>{anime.score}</TagLabel>
+                  <TagLabel>{manga.scored}</TagLabel>
                 </Tag>
               </Flex>
             </Flex>
@@ -82,4 +84,4 @@ function TopAnime() {
     </AnimatePresence>
   );
 }
-export default TopAnime;
+export default TopManga;
