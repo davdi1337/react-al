@@ -6,7 +6,7 @@ export const SingleAnime = () => {
   const search = useContext(SearchContext);
   return (
     <Box mt="100px">
-      <Image src={search.singleData.data.images.jpg.image_url} />
+        <Image src={search.singleData.data.images.jpg.image_url} />
     </Box>
   );
 };

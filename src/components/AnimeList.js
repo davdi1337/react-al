@@ -29,7 +29,7 @@ export const AnimeList = () => {
       .then((json) => {
         search.singleData = json;
         setData(json.data);
-        navigate(`/anime`);
+        navigate(`/anime/${mal_id}`);
       });
   };
   return (
