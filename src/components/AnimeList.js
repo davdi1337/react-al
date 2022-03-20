@@ -19,7 +19,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 export const AnimeList = () => {
   const search = useContext(SearchContext);
-  const tagbg = useColorModeValue("blue", "purple");
+  const cardbg = useColorModeValue("white", "gray.900");
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
@@ -55,23 +55,24 @@ export const AnimeList = () => {
               justifyContent="space-between"
               alignItems="center"
               display="flex"
-              borderWidth="1px"
-              borderRadius="md"
+              borderRadius="xl"
               textAlign="center"
+              boxShadow="xl"
               rowGap="5"
-              p="2"
+              pb="2"
+              overflow="hidden"
+              bgColor={cardbg}
             >
               <Image
                 src={images.jpg.image_url}
                 key={mal_id}
                 alt={title}
-                w="200px"
+                w="100%"
                 h="300px"
                 objectFit="cover"
-                borderRadius="md"
               ></Image>
               <Text>{title}</Text>
-              <Tag size="md" colorScheme={tagbg}>
+              <Tag size="md" colorScheme="blue" borderRadius="full">
                 <TagLeftIcon as={FaStar}></TagLeftIcon>
                 <TagLabel>{score || "?"}</TagLabel>
               </Tag>
@@ -79,7 +80,9 @@ export const AnimeList = () => {
                 onClick={() => onClickHandler(mal_id)}
                 textDecoration="none!important"
               >
-                <Button colorScheme={tagbg}>Learn more</Button>
+                <Button colorScheme="blue" borderRadius="xl">
+                  Learn more
+                </Button>
               </Link>
             </Box>
           ))}

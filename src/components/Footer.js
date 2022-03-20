@@ -15,7 +15,7 @@ function Footer() {
         davdi1337
         <FaGithub />
       </Link>
-      <Text color={useColorModeValue("blue.500", "purple.200")}>WIP</Text>
+      <Text color="blue.500">WIP</Text>
     </Box>
   );
 }

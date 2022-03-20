@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
-import { Grid, Heading } from "@chakra-ui/react";
+import { Grid, Heading, useColorModeValue } from "@chakra-ui/react";
 import TopAnime from "../components/TopAnime";
 import TopManga from "../components/TopManga";
 
@@ -15,7 +15,7 @@ const Home = () => {
     search.search(input).then((res) => {
       search.animeData = res.data;
       localStorage.setItem("myData", JSON.stringify(res.data));
-      navigate("/results");
+      navigate(`/results`);
     });
   };
   return (
@@ -27,11 +27,17 @@ const Home = () => {
       minH="400px"
     >
       <Heading mt="100px" display="flex" justifyContent="center" w="100%">
-        Top Animes
+        Top
+        <Heading color={useColorModeValue("blue.500", "blue.200")}>
+          &nbsp;Animes
+        </Heading>
       </Heading>
       <TopAnime />
       <Heading mt="100px" display="flex" justifyContent="center" w="100%">
-        Top Mangas
+        Top
+        <Heading color={useColorModeValue("blue.500", "blue.200")}>
+          &nbsp;Mangas
+        </Heading>
       </Heading>
       <TopManga />
     </Grid>

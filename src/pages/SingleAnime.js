@@ -11,6 +11,7 @@ import {
   AccordionIcon,
   Box,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -19,6 +20,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export const SingleAnime = () => {
   const search = useContext(SearchContext);
+  const cardbg = useColorModeValue("white", "gray.900");
+  const accordbg = useColorModeValue("gray.100", "gray.800");
   const [, pageUpdate] = useState(false);
   const params = useParams();
   useEffect(async () => {
@@ -31,9 +34,9 @@ export const SingleAnime = () => {
     }
   }, []);
   return (
-    <Flex mt="100px" justifyContent="center">
+    <Flex mt="100px" alignItems="center" flexDirection="column">
       {Object.keys(search.singleData).length !== 0 ? (
-        <Flex flexDirection="column" maxW="1280px" gap="5" alignItems="center">
+        <Flex flexDirection="column" gap="5" alignItems="center">
           <AnimatePresence>
             <motion.div
               initial={{ y: -20, opacity: 0 }}
@@ -42,20 +45,21 @@ export const SingleAnime = () => {
             >
               <Flex
                 flexDirection="column"
-                maxW="600px"
-                w="600px"
+                w={{ base: "300px", sm: "400px", md: "500px", lg: "720px" }}
                 justifyContent="center"
                 alignItems="center"
                 gap="5"
-                borderWidth="1px"
-                borderRadius="md"
-                p="5"
+                bgColor={cardbg}
+                borderRadius="xl"
+                boxShadow="xl"
+                p={{ base: "0", sm: "5" }}
+                overflow="hidden"
               >
                 <Image
-                  w="200px"
-                  h="300px"
+                  w="300px"
+                  h="400px"
                   objectFit="cover"
-                  borderRadius="md"
+                  borderRadius={{ base: "none", sm: "lg" }}
                   src={search.singleData.data.images.jpg.image_url}
                   alt={search.singleData.data.title}
                 />
@@ -71,7 +75,7 @@ export const SingleAnime = () => {
                   </Flex>
                   <Flex flexDirection="row" gap="2">
                     <Text fontWeight="bold">English title:</Text>
-                    <Text>{search.singleData.data.title_english}</Text>
+                    <Text>{search.singleData.data.title_english || "?"}</Text>
                   </Flex>
                   <Flex flexDirection="row" gap="2">
                     <Text fontWeight="bold">Season:</Text>
@@ -168,9 +172,14 @@ export const SingleAnime = () => {
                     <Text>{search.singleData.data.type}</Text>
                   </Flex>
                 </Flex>
-                <Accordion allowToggle w="100%">
-                  <AccordionItem>
-                    <AccordionButton>
+                <Accordion allowToggle w="100%" p={{ base: "2", sm: "0" }}>
+                  <AccordionItem
+                    borderRadius="xl"
+                    border="none"
+                    bgColor={accordbg}
+                    overflow="hidden"
+                  >
+                    <AccordionButton _focus={{ boxShadow: "none" }}>
                       <Box flex="1" textAlign="left">
                         Synopsis
                       </Box>
@@ -197,12 +206,13 @@ export const SingleAnime = () => {
               <Flex
                 flexDirection="column"
                 alignItems="center"
-                borderWidth="1px"
+                bgColor={cardbg}
                 p="5"
-                borderRadius="md"
-                w="960px"
+                borderRadius="xl"
+                boxShadow="xl"
+                w={{ base: "300px", sm: "460px", md: "560px", lg: "960px" }}
               >
-                <Heading my="5">Watch trailer</Heading>
+                <Heading my="5">Trailer</Heading>
                 <Embed url={search.singleData.data.trailer.url}></Embed>
               </Flex>
             </motion.div>

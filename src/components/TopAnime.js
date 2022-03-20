@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
-  Button,
   Flex,
   useColorModeValue,
   Image,
@@ -16,8 +14,9 @@ import { AnimatePresence, motion } from "framer-motion";
 
 function TopAnime() {
   const [data, setData] = useState([]);
-  const tagbg = useColorModeValue("blue", "purple");
   const [loading, setLoading] = useState(true);
+  const cardbg = useColorModeValue("white", "gray.900");
+  const [style, setStyle] = useState({ display: "none" });
 
   useEffect(() => {
     fetch("https://api.jikan.moe/v4/top/anime")
@@ -48,29 +47,32 @@ function TopAnime() {
               alignItems="center"
               w="250px"
               key={anime.mal_id}
-              borderWidth="1px"
+              bgColor={cardbg}
               justifyContent="space-between"
-              borderRadius="md"
+              borderRadius="xl"
               textAlign="center"
-              p="2"
               gap="1"
+              pb="2"
+              boxShadow="xl"
+              overflow="hidden"
+              _hover={{ transform: "scale(1.05)" }}
+              transition="transform 0.2s"
             >
               <Image
-                w="200px"
+                w="100%"
                 h="300px"
                 objectFit="cover"
                 key={anime.mal_id}
                 src={anime.images.jpg.image_url}
-                borderRadius="md"
               ></Image>
               <Text key={anime.title}>{anime.title}</Text>
 
               <Flex gap="2">
-                <Tag colorScheme={tagbg} size="md">
+                <Tag colorScheme="blue" size="md" borderRadius="full">
                   <TagLeftIcon as={FaHashtag}></TagLeftIcon>
                   <TagLabel>{anime.rank}</TagLabel>
                 </Tag>
-                <Tag colorScheme={tagbg} size="md">
+                <Tag colorScheme="blue" size="md" borderRadius="full">
                   <TagLeftIcon as={FaStar}></TagLeftIcon>
                   <TagLabel>{anime.score}</TagLabel>
                 </Tag>

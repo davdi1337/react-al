@@ -21,7 +21,8 @@ function SwitchButton() {
             onClick={toggleColorMode}
             flex="1"
             align="right"
-            colorScheme={useColorModeValue("blue", "purple")}
+            colorScheme="blue"
+            borderRadius="lg"
             mx="2"
           ></IconButton>
         </motion.div>

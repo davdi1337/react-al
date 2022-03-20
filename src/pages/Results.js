@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { SearchContext } from "../context/search";
 import { AnimeList } from "../components/AnimeList";
-import { Text } from "@chakra-ui/react";
 
 const Results = () => {
   const search = useContext(SearchContext);
@@ -20,8 +19,8 @@ const Results = () => {
   //console.log("YES");
   return (
     <div>
-      {(dataExists && <AnimeList data={search.animeData}/>) ||
-        <Text>Data not exist</Text>}
+      {(dataExists && <AnimeList data={search.animeData} />) ||
+        console.log("nincs")}
     </div>
   );
 };
