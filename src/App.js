@@ -31,12 +31,12 @@ function App() {
       >
         <BrowserRouter>
           <Navbar />
-          <Switch>
+          <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
-            <Route path="/anime" exact><Home/></Route>
-          </Switch>
-          </BrowserRouter>
+            <Route exact path={"/anime/:id"} element={<SingleAnime />} />
+          </Routes>
+        </BrowserRouter>
         <Footer />
       </SearchContext.Provider>
     </div>
