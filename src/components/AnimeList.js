@@ -23,8 +23,8 @@ export const AnimeList = () => {
             navigate(`/anime/`)
         })
       }; */
-      const onClickHandler = () => {
-          fetch(`https://api.jikan.moe/v4/anime/${data.mal_id}`)
+      const onClickHandler = (mal_id) => {
+          fetch(`https://api.jikan.moe/v4/anime/${mal_id}`)
           .then((response) => response.json())
           .then((json) => {
               console.log(json)
@@ -42,7 +42,7 @@ export const AnimeList = () => {
                     <TagLabel>{score || "?"}</TagLabel>
                 </Tag>
                 <Link onClick={onClickHandler} textDecoration="none!important">
-                <Button colorScheme={tagbg}>Learn more</Button>
+                <Button colorScheme={tagbg} size="md">Learn more</Button>
                 </Link>
             </Box>
         ))}

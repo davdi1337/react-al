@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
 import {
-  Grid
+  Grid, Heading
 } from "@chakra-ui/react";
 import TopAnime from '../components/TopAnime'
 
@@ -21,12 +21,9 @@ const Home = () => {
     });
   };
   return (
-    <Grid flexDirection="column" justifyContent="center" alignItems="center" minH="400px">
-      <Grid>
-        <Grid>
+    <Grid display="flex" flexDirection="column" justifyContent="center" alignItems="center" minH="400px">
+      <Heading mt="100px" display="flex" justifyContent="center" w="100%">Top Animes</Heading>
         <TopAnime/>
-        </Grid>
-      </Grid>
     </Grid>
   );
 };
