@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { SearchContext } from "../context/search";
 import { Grid, Heading } from "@chakra-ui/react";
 import TopAnime from "../components/TopAnime";
@@ -7,7 +7,7 @@ import TopAnime from "../components/TopAnime";
 const Home = () => {
   const search = useContext(SearchContext);
   const [input, setInput] = useState("");
-  const navigate = useNavigate();
+  const navigate = useHistory();
 
   const handleSearch = (event) => {
     event.preventDefault();

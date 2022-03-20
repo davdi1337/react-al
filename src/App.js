@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Results from "./pages/Results";
 import Navbar from "./components/Navbar";
@@ -34,7 +34,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
-            <Route exact path={`/anime/:id`} element={<SingleAnime />} />
+            <Route exact path={"/anime/:id"} element={<SingleAnime />} />
           </Routes>
         </BrowserRouter>
         <Footer />
