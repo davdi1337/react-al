@@ -1,25 +1,36 @@
 import { Box, Flex, Image, Tag, TagLeftIcon, Text, TagLabel, useColorModeValue, Link, Button } from '@chakra-ui/react'
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { SearchContext } from '../context/search';
 import React from 'react'
 import { FaStar } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export const AnimeList = () => {
     const search = useContext(SearchContext);
     const tagbg = useColorModeValue('blue', 'purple');
     const navigate = useNavigate();
 
+    const [data, setData] = useState([])
 
-    const onClickHandler = () => {
-        return fetch(`https://api.jikan.moe/v4/anime?q=`)
+
+   /*  const onClickHandler = () => {
+        return fetch(`https://api.jikan.moe/v4/anime`)
         .then(response => response.json())
         .then(res => {
             search.setSingle(res);
             localStorage.setItem('singleData', JSON.stringify(res));
-            navigate('/anime')
+            navigate(`/anime/`)
         })
-      };
+      }; */
+      const onClickHandler = () => {
+          fetch(`https://api.jikan.moe/v4/anime/${data.mal_id}`)
+          .then((response) => response.json())
+          .then((json) => {
+              console.log(json)
+              setData(json.data)
+          })
+      }
   return (
     <Flex flexWrap="wrap" justifyContent="center" gap="5" position="relative" mt="100px">
         {search.animeData.map(({images, mal_id, title, score, year})=> (

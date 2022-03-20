@@ -2,9 +2,9 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
 import {
-  Grid,
-  Image,
+  Grid
 } from "@chakra-ui/react";
+import TopAnime from '../components/TopAnime'
 
 const Home = () => {
   const search = useContext(SearchContext);
@@ -24,9 +24,7 @@ const Home = () => {
     <Grid flexDirection="column" justifyContent="center" alignItems="center" minH="400px">
       <Grid>
         <Grid>
-          {search.animeData.map(({ images }) => (
-            <img src={images.jpg.image_url} />
-          ))}
+        <TopAnime/>
         </Grid>
       </Grid>
     </Grid>
