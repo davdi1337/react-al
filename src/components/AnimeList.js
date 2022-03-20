@@ -27,9 +27,9 @@ export const AnimeList = () => {
     fetch(`https://api.jikan.moe/v4/anime/${mal_id}`)
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        search.singleData = json;
         setData(json.data);
-        navigate(`/anime`)
+        navigate(`/anime`);
       });
   };
   return (
