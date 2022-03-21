@@ -3,6 +3,7 @@ import { Box, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import { FaGithub } from "react-icons/fa";
 
 function Footer() {
+  const footercolor = useColorModeValue("blue.500", "blue.200");
   return (
     <Box align="center" opacity="0.5" fontSize="sm" my="5">
       &copy; {new Date().getFullYear()}{" "}
@@ -15,7 +16,7 @@ function Footer() {
         davdi1337
         <FaGithub />
       </Link>
-      <Text color="blue.500">WIP</Text>
+      <Text color={footercolor}>WIP</Text>
     </Box>
   );
 }

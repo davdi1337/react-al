@@ -45,7 +45,8 @@ export const SingleAnime = () => {
             >
               <Flex
                 flexDirection="column"
-                w={{ base: "300px", sm: "400px", md: "500px", lg: "720px" }}
+                w={{ base: "300px", sm: "400px", md: "500px", lg: "100%" }}
+                minW={{ base: "300px", sm: "400px", md: "500px", lg: "720px" }}
                 justifyContent="center"
                 alignItems="center"
                 gap="5"
@@ -54,13 +55,14 @@ export const SingleAnime = () => {
                 boxShadow="xl"
                 p={{ base: "0", sm: "5" }}
                 overflow="hidden"
+                textAlign="center"
               >
                 <Image
                   w="300px"
                   h="400px"
                   objectFit="cover"
                   borderRadius={{ base: "none", sm: "lg" }}
-                  src={search.singleData.data.images.jpg.image_url}
+                  src={search.singleData.data.images.jpg.large_image_url}
                   alt={search.singleData.data.title}
                 />
                 <Flex
@@ -69,47 +71,59 @@ export const SingleAnime = () => {
                   alignItems="center"
                   fontSize="large"
                 >
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", lg: "row" }} gap="2">
                     <Text fontWeight="bold">Title:</Text>
                     <Text>{search.singleData.data.title || "?"}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex
+                    flexDirection={{
+                      base: "column",
+                      lg: "row",
+                    }}
+                    gap="2"
+                  >
                     <Text fontWeight="bold">English title:</Text>
-                    <Text>{search.singleData.data.title_english || "?"}</Text>
+                    <Text>
+                      {search.singleData.data.title_english ? (
+                        <Text>{search.singleData.data.title_english}</Text>
+                      ) : (
+                        "?"
+                      )}
+                    </Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Season:</Text>
                     <Text textTransform="capitalize">
                       {search.singleData.data.season || "?"}
                     </Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Year:</Text>
                     <Text>{search.singleData.data.year || "?"}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Aired:</Text>
                     <Text>{search.singleData.data.aired.string}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Status:</Text>
                     <Text>{search.singleData.data.status}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Broadcast:</Text>
                     <Text>
                       {search.singleData.data.broadcast.string || "?"}
                     </Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Duration:</Text>
                     <Text>{search.singleData.data.duration}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Episodes:</Text>
                     <Text>{search.singleData.data.episodes || "?"}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Studios:</Text>
                     <Text>
                       {search.singleData.data.studios.map(({ name }, index) => {
@@ -132,7 +146,7 @@ export const SingleAnime = () => {
                       })}
                     </Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Genres:</Text>
                     <Text>
                       {search.singleData.data.genres.map(({ name }, index) => {
@@ -155,19 +169,19 @@ export const SingleAnime = () => {
                       })}
                     </Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Rank:</Text>
                     <Text>{search.singleData.data.rank || "?"}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Score:</Text>
                     <Text>{search.singleData.data.score || "?"}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Source:</Text>
                     <Text>{search.singleData.data.source}</Text>
                   </Flex>
-                  <Flex flexDirection="row" gap="2">
+                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Type:</Text>
                     <Text>{search.singleData.data.type}</Text>
                   </Flex>
@@ -213,7 +227,14 @@ export const SingleAnime = () => {
                 w={{ base: "300px", sm: "460px", md: "560px", lg: "960px" }}
               >
                 <Heading my="5">Trailer</Heading>
-                <Embed url={search.singleData.data.trailer.url}></Embed>
+
+                {/* <Embed url={search.singleData.data.trailer.url}></Embed> */}
+                {/* DISPLAY TRAILER IF HAVE */}
+                {search.singleData.data.trailer.url ? (
+                  <Embed url={search.singleData.data.trailer.url} />
+                ) : (
+                  <Text>Not found</Text>
+                )}
               </Flex>
             </motion.div>
           </AnimatePresence>

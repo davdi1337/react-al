@@ -68,7 +68,10 @@ function Navbar() {
             w="100%"
           >
             <form onSubmit={handleSearch}>
-              <InputGroup w="300px" display={{ base: "block", md: "block" }}>
+              <InputGroup
+                w={{ base: "250px", sm: "300px" }}
+                display={{ base: "block", md: "block" }}
+              >
                 <Input
                   placeholder="Search anime"
                   onChange={(event) => setInput(event.target.value)}

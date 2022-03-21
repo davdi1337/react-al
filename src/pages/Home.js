@@ -4,6 +4,7 @@ import { SearchContext } from "../context/search";
 import { Grid, Heading, useColorModeValue } from "@chakra-ui/react";
 import TopAnime from "../components/TopAnime";
 import TopManga from "../components/TopManga";
+import Welcome from "../components/Welcome";
 
 const Home = () => {
   const search = useContext(SearchContext);
@@ -26,14 +27,15 @@ const Home = () => {
       alignItems="center"
       minH="400px"
     >
-      <Heading mt="100px" display="flex" justifyContent="center" w="100%">
+      <Welcome />
+      <Heading display="flex" justifyContent="center" w="100%">
         Top
         <Heading color={useColorModeValue("blue.500", "blue.200")}>
           &nbsp;Animes
         </Heading>
       </Heading>
       <TopAnime />
-      <Heading mt="100px" display="flex" justifyContent="center" w="100%">
+      <Heading mt="50px" display="flex" justifyContent="center" w="100%">
         Top
         <Heading color={useColorModeValue("blue.500", "blue.200")}>
           &nbsp;Mangas

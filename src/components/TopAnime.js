@@ -63,7 +63,7 @@ function TopAnime() {
                 h="300px"
                 objectFit="cover"
                 key={anime.mal_id}
-                src={anime.images.jpg.image_url}
+                src={anime.images.jpg.large_image_url}
               ></Image>
               <Text key={anime.title}>{anime.title}</Text>
 

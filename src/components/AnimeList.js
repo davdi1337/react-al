@@ -64,14 +64,14 @@ export const AnimeList = () => {
               bgColor={cardbg}
             >
               <Image
-                src={images.jpg.image_url}
+                src={images.jpg.large_image_url}
                 key={mal_id}
                 alt={title}
                 w="100%"
                 h="300px"
                 objectFit="cover"
               ></Image>
-              <Text>{title}</Text>
+              <Text paddingInline="2">{title}</Text>
               <Tag size="md" colorScheme="blue" borderRadius="full">
                 <TagLeftIcon as={FaStar}></TagLeftIcon>
                 <TagLabel>{score || "?"}</TagLabel>

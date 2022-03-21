@@ -65,7 +65,7 @@ function TopManga() {
                 h="300px"
                 objectFit="cover"
                 key={manga.mal_id}
-                src={manga.images.jpg.image_url}
+                src={manga.images.jpg.large_image_url}
               ></Image>
               <Text key={manga.title}>{manga.title}</Text>
 
