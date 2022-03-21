@@ -11,6 +11,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Heading,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,7 @@ function Navbar() {
     "rgba(255, 255, 255, 0.8)",
     "rgba(26, 32, 44, 0.8)"
   );
+  const headingcolor = useColorModeValue("blue.500", "blue.200");
 
   const search = useContext(SearchContext);
   const [input, setInput] = useState("");
@@ -57,8 +59,19 @@ function Navbar() {
             w="100%"
             display={{ base: "none", md: "flex" }}
           >
-            <Link fontSize="xl" fontWeight="bold" href="/">
-              React MAL
+            <Link
+              fontSize="xl"
+              fontWeight="bold"
+              href="/"
+              textDecoration="none!important"
+              _focus={{ boxShadow: "none" }}
+            >
+              <Heading>
+                React
+                <Heading display="inline" color={headingcolor}>
+                  MAL
+                </Heading>
+              </Heading>
             </Link>
           </Flex>
 
