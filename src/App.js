@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import React, { useState } from "react";
 import { SearchContext } from "./context/search";
 import { SingleAnime } from "./pages/SingleAnime";
+import Helmet from "react-helmet";
 
 function App() {
   const [animeData, setAnimeData] = useState([]);
@@ -25,7 +26,10 @@ function App() {
     );
   };
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>ReactMAL</title>
+      </Helmet>
       <SearchContext.Provider
         value={{ search, animeData, setData, singleData, setSingle }}
       >
@@ -39,7 +43,7 @@ function App() {
         </BrowserRouter>
         <Footer />
       </SearchContext.Provider>
-    </div>
+    </>
   );
 }
 

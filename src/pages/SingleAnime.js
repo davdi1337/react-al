@@ -17,6 +17,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Embed from "react-embed";
 import { motion, AnimatePresence } from "framer-motion";
+import { CloseIcon } from "@chakra-ui/icons";
+import Helmet from "react-helmet";
 
 export const SingleAnime = () => {
   const search = useContext(SearchContext);
@@ -37,6 +39,11 @@ export const SingleAnime = () => {
     <Flex mt="100px" alignItems="center" flexDirection="column">
       {Object.keys(search.singleData).length !== 0 ? (
         <Flex flexDirection="column" gap="5" alignItems="center">
+          {/* ADD WEBSITE TITLE */}
+          <Helmet>
+            <title>{search.singleData.data.title} - ReactMAL</title>
+          </Helmet>
+          {/* ADD WEBSITE TITLE */}
           <AnimatePresence>
             <motion.div
               initial={{ y: -20, opacity: 0 }}
@@ -47,6 +54,7 @@ export const SingleAnime = () => {
                 flexDirection="column"
                 w={{ base: "300px", sm: "400px", md: "500px", lg: "100%" }}
                 minW={{ base: "300px", sm: "400px", md: "500px", lg: "720px" }}
+                maxW="720px"
                 justifyContent="center"
                 alignItems="center"
                 gap="5"
@@ -233,7 +241,27 @@ export const SingleAnime = () => {
                 {search.singleData.data.trailer.url ? (
                   <Embed url={search.singleData.data.trailer.url} />
                 ) : (
-                  <Text>Not found</Text>
+                  <Flex
+                    flexDirection="column"
+                    alignItems="center"
+                    textAlign="center"
+                  >
+                    <Flex
+                      bgColor="red.500"
+                      color="inherit"
+                      rounded="50px"
+                      w="50px"
+                      h="50px"
+                      justifyContent="center"
+                      alignItems="center"
+                      boxShadow={
+                        "0px 0px 25px -5px rgb(229 62 62 / 67%), 0 4px 5px -5px rgb(229 62 62 / 43%)"
+                      }
+                    >
+                      <CloseIcon boxSize="20px" />
+                    </Flex>
+                    <Text my="2">Trailer not found</Text>
+                  </Flex>
                 )}
               </Flex>
             </motion.div>
