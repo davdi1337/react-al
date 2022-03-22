@@ -81,7 +81,7 @@ export const AnimeList = () => {
                 textDecoration="none!important"
               >
                 <Button colorScheme="blue" borderRadius="xl">
-                  Learn more
+                  Details
                 </Button>
               </Link>
             </Box>

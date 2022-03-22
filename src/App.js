@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import { SearchContext } from "./context/search";
 import { SingleAnime } from "./pages/SingleAnime";
 import Helmet from "react-helmet";
+import Characters from "./pages/Characters";
+import UpButton from "./components/UpButton";
 
 function App() {
   const [animeData, setAnimeData] = useState([]);
@@ -35,10 +37,16 @@ function App() {
       >
         <BrowserRouter>
           <Navbar />
+          <UpButton />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
             <Route exact path={"/anime/:id"} element={<SingleAnime />} />
+            <Route
+              exact
+              path={"/anime/:id/characters"}
+              element={<Characters />}
+            />
           </Routes>
         </BrowserRouter>
         <Footer />

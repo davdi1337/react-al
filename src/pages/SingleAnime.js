@@ -12,12 +12,14 @@ import {
   Box,
   Heading,
   useColorModeValue,
+  Button,
+  Link,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Embed from "react-embed";
 import { motion, AnimatePresence } from "framer-motion";
-import { CloseIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, CloseIcon } from "@chakra-ui/icons";
 import Helmet from "react-helmet";
 
 export const SingleAnime = () => {
@@ -26,6 +28,9 @@ export const SingleAnime = () => {
   const accordbg = useColorModeValue("gray.100", "gray.800");
   const [, pageUpdate] = useState(false);
   const params = useParams();
+  const [data, setData] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
+  const charactername = useColorModeValue("blue.500", "blue.200");
   useEffect(async () => {
     if (Object.keys(search.singleData).length === 0) {
       const res = await axios.get(
@@ -34,6 +39,13 @@ export const SingleAnime = () => {
       search.singleData = res.data;
       pageUpdate((p) => !p);
     }
+  }, []);
+  useEffect(() => {
+    fetch(`https://api.jikan.moe/v4/anime/${params.id}/characters`)
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json.data);
+      });
   }, []);
   return (
     <Flex mt="100px" alignItems="center" flexDirection="column">
@@ -48,7 +60,7 @@ export const SingleAnime = () => {
             <motion.div
               initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
             >
               <Flex
                 flexDirection="column"
@@ -217,13 +229,18 @@ export const SingleAnime = () => {
               </Flex>
             </motion.div>
           </AnimatePresence>
-          {/* Anime card end */}
+          {/* ANIME CARD END */}
 
           <AnimatePresence>
             <motion.div
               initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{
+                duration: 0.8,
+                bounce: 0.5,
+                type: "spring",
+              }}
             >
               <Flex
                 flexDirection="column"
@@ -236,7 +253,6 @@ export const SingleAnime = () => {
               >
                 <Heading my="5">Trailer</Heading>
 
-                {/* <Embed url={search.singleData.data.trailer.url}></Embed> */}
                 {/* DISPLAY TRAILER IF HAVE */}
                 {search.singleData.data.trailer.url ? (
                   <Embed url={search.singleData.data.trailer.url} />
@@ -264,6 +280,91 @@ export const SingleAnime = () => {
                   </Flex>
                 )}
               </Flex>
+            </motion.div>
+          </AnimatePresence>
+          {/* TRAILER END */}
+
+          <AnimatePresence>
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{
+                duration: 0.8,
+                bounce: 0.4,
+                type: "spring",
+              }}
+            >
+              <Flex
+                w="960px"
+                bgColor={cardbg}
+                alignItems="center"
+                flexDirection="column"
+                gap="2"
+                borderRadius="xl"
+                p="5"
+                boxShadow="xl"
+              >
+                <Heading>Characters</Heading>
+                <Flex
+                  flexDirection="row"
+                  w="100%"
+                  flexWrap="wrap"
+                  justifyContent="space-between"
+                  gap="2"
+                  className="teszt"
+                >
+                  {data.slice(0, 8).map((characters) => {
+                    return (
+                      <Flex
+                        flexDirection="row"
+                        gap="2"
+                        bgColor={accordbg}
+                        minW="calc(960px / 2.5)"
+                        borderRadius="xl"
+                        overflow="hidden"
+                        key={characters.character.mal_id}
+                      >
+                        <Image
+                          src={characters.character.images.jpg.image_url}
+                          key={characters.character.images}
+                          w="100px"
+                          h="150px"
+                          objectFit="cover"
+                          borderRadius="lg"
+                        ></Image>
+                        <Flex
+                          flexDirection="column"
+                          justifyContent="center"
+                          gap="2"
+                        >
+                          <Text
+                            color={charactername}
+                            key={characters.character.name}
+                          >
+                            {characters.character.name}
+                          </Text>
+                          <Text key={characters.role}>{characters.role}</Text>
+                        </Flex>
+                      </Flex>
+                    );
+                  })}
+                </Flex>
+                <Link
+                  href={`/anime/${params.id}/characters`}
+                  textDecoration="none!important"
+                >
+                  <Button
+                    borderRadius="xl"
+                    colorScheme="blue"
+                    rightIcon={<ArrowForwardIcon />}
+                    my="2"
+                  >
+                    All characters
+                  </Button>
+                </Link>
+              </Flex>
+              {/* CHARACTER CARDS END */}
             </motion.div>
           </AnimatePresence>
         </Flex>

@@ -29,7 +29,7 @@ function Welcome() {
           <motion.div
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8, bounce: 0.4 }}
           >
             <Heading>
               Welcome to{" "}
@@ -43,7 +43,7 @@ function Welcome() {
               for any anime you want, see their informations, and many more
               things in the near future!
             </Text>
-            <Link href="/" textDecoration="none!important">
+            <Link href="#" textDecoration="none!important">
               <Button colorScheme="blue" borderRadius="xl">
                 About this project
               </Button>

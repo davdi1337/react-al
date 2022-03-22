@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
-  Button,
   Flex,
   useColorModeValue,
   Image,
@@ -40,46 +38,59 @@ function TopManga() {
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+        transition={{ duration: 1, type: "spring", bounce: 0.4 }}
       >
         <Flex flexWrap="wrap" justifyContent="center" mt="50px" gap="5">
           {data.map((manga) => (
-            <Flex
-              flexDirection="column"
-              alignItems="center"
-              w="250px"
-              key={manga.mal_id}
-              bgColor={cardbg}
-              justifyContent="space-between"
-              borderRadius="xl"
-              textAlign="center"
-              gap="1"
-              pb="2"
-              boxShadow="xl"
-              overflow="hidden"
-              _hover={{ transform: "scale(1.05)" }}
-              transition="transform 0.2s"
-            >
-              <Image
-                w="100%"
-                h="300px"
-                objectFit="cover"
-                key={manga.mal_id}
-                src={manga.images.jpg.large_image_url}
-              ></Image>
-              <Text key={manga.title}>{manga.title}</Text>
+            <AnimatePresence>
+              <motion.div
+                initial={{ y: 40, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+                viewport={{ once: true, amount: 0.5 }}
+              >
+                <Flex
+                  flexDirection="column"
+                  alignItems="center"
+                  w="250px"
+                  key={manga.mal_id}
+                  bgColor={cardbg}
+                  justifyContent="space-between"
+                  borderRadius="xl"
+                  textAlign="center"
+                  gap="1"
+                  pb="2"
+                  boxShadow="xl"
+                  overflow="hidden"
+                  _hover={{ transform: "scale(1.05)" }}
+                  transition="transform 0.2s"
+                  minH="400px"
+                >
+                  <Link href="#" w="100%">
+                    <Image
+                      w="100%"
+                      h="300px"
+                      objectFit="cover"
+                      key={manga.mal_id}
+                      src={manga.images.jpg.large_image_url}
+                      alt={manga.title}
+                    ></Image>
+                  </Link>
+                  <Text key={manga.title}>{manga.title}</Text>
 
-              <Flex gap="2">
-                <Tag colorScheme="blue" size="md" borderRadius="full">
-                  <TagLeftIcon as={FaHashtag}></TagLeftIcon>
-                  <TagLabel>{manga.rank}</TagLabel>
-                </Tag>
-                <Tag colorScheme="blue" size="md" borderRadius="full">
-                  <TagLeftIcon as={FaStar}></TagLeftIcon>
-                  <TagLabel>{manga.scored}</TagLabel>
-                </Tag>
-              </Flex>
-            </Flex>
+                  <Flex gap="2">
+                    <Tag colorScheme="blue" size="md" borderRadius="full">
+                      <TagLeftIcon as={FaHashtag}></TagLeftIcon>
+                      <TagLabel>{manga.rank}</TagLabel>
+                    </Tag>
+                    <Tag colorScheme="blue" size="md" borderRadius="full">
+                      <TagLeftIcon as={FaStar}></TagLeftIcon>
+                      <TagLabel>{manga.scored}</TagLabel>
+                    </Tag>
+                  </Flex>
+                </Flex>
+              </motion.div>
+            </AnimatePresence>
           ))}
         </Flex>
       </motion.div>
