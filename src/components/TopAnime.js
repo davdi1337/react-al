@@ -66,7 +66,7 @@ function TopAnime() {
                   overflow="hidden"
                   _hover={{ transform: "scale(1.05)" }}
                   transition="transform 0.2s"
-                  minH="400px"
+                  minH="425px"
                 >
                   <Link
                     w="100%"

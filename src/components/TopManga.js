@@ -64,7 +64,7 @@ function TopManga() {
                   overflow="hidden"
                   _hover={{ transform: "scale(1.05)" }}
                   transition="transform 0.2s"
-                  minH="400px"
+                  minH="425px"
                 >
                   <Link href="#" w="100%">
                     <Image
