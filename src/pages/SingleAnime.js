@@ -288,7 +288,7 @@ export const SingleAnime = () => {
             <motion.div
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{
                 duration: 0.8,
                 bounce: 0.4,
@@ -317,73 +317,102 @@ export const SingleAnime = () => {
                 >
                   {data.slice(0, 8).map((characters) => {
                     return (
-                      <Flex
-                        flexDirection={{
-                          base: "column",
-                          sm: "column",
-                          md: "row",
-                          lg: "row",
-                        }}
-                        gap="2"
-                        bgColor={accordbg}
-                        minW={{
-                          base: "calc(300px / 2)",
-                          sm: "calc(400px / 2)",
-                          md: "calc(720px / 2.5)",
-                          lg: "calc(960px / 2.5)",
-                        }}
-                        maxW={{
-                          base: "calc(300px / 2)",
-                          sm: "calc(400px / 2)",
-                        }}
-                        alignItems={{ base: "center", sm: "center" }}
-                        borderRadius="xl"
-                        overflow="hidden"
-                        key={characters.character.mal_id}
-                      >
-                        <Image
-                          src={characters.character.images.jpg.image_url}
-                          key={characters.character.images}
-                          w={{
-                            base: "150px",
-                            sm: "calc(400px / 2)",
-                            md: "100px",
+                      <AnimatePresence>
+                        <motion.div
+                          initial={{ y: 50, opacity: 0 }}
+                          whileInView={{ y: 0, opacity: 1 }}
+                          viewport={{ once: true, amount: 0.4 }}
+                          transition={{
+                            type: "spring",
+                            bounce: 0.4,
+                            duration: 0.8,
+                            delay: 0.2,
                           }}
-                          h="150px"
-                          objectFit="cover"
-                          borderRadius="lg"
-                        ></Image>
-                        <Flex
-                          flexDirection="column"
-                          justifyContent="center"
-                          gap="2"
-                          textAlign={{ base: "center", md: "left" }}
                         >
-                          <Text
-                            color={charactername}
-                            key={characters.character.name}
+                          <Flex
+                            flexDirection={{
+                              base: "column",
+                              sm: "column",
+                              md: "row",
+                              lg: "row",
+                            }}
+                            gap="2"
+                            bgColor={accordbg}
+                            minW={{
+                              base: "calc(300px / 2)",
+                              sm: "calc(400px / 2)",
+                              md: "calc(720px / 2.5)",
+                              lg: "calc(960px / 2.5)",
+                            }}
+                            maxW={{
+                              base: "calc(300px / 2)",
+                              sm: "calc(400px / 2)",
+                            }}
+                            alignItems={{ base: "center", sm: "center" }}
+                            borderRadius="xl"
+                            overflow="hidden"
+                            key={characters.character.mal_id}
                           >
-                            {characters.character.name}
-                          </Text>
-                          <Text key={characters.role}>{characters.role}</Text>
-                        </Flex>
-                      </Flex>
+                            <Image
+                              src={characters.character.images.jpg.image_url}
+                              key={characters.character.images}
+                              w={{
+                                base: "150px",
+                                sm: "calc(400px / 2)",
+                                md: "100px",
+                              }}
+                              h="150px"
+                              objectFit="cover"
+                              borderRadius="lg"
+                            ></Image>
+                            <Flex
+                              flexDirection="column"
+                              justifyContent="center"
+                              gap="2"
+                              textAlign={{ base: "center", md: "left" }}
+                            >
+                              <Text
+                                color={charactername}
+                                key={characters.character.name}
+                              >
+                                {characters.character.name}
+                              </Text>
+                              <Text key={characters.role}>
+                                {characters.role}
+                              </Text>
+                            </Flex>
+                          </Flex>
+                        </motion.div>
+                      </AnimatePresence>
                     );
                   })}
                 </Flex>
-                <Link
-                  href={`/anime/${params.id}/characters`}
-                  textDecoration="none!important"
-                >
-                  <Button
-                    borderRadius="xl"
-                    colorScheme="blue"
-                    rightIcon={<ArrowForwardIcon />}
-                    my="2"
+                <AnimatePresence>
+                  <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{
+                      duration: 0.8,
+                      bounce: 0.4,
+                      type: "spring",
+                    }}
                   >
-                    All characters
-                  </Button>
-                </Link>
+                    <Link
+                      href={`/anime/${params.id}/characters`}
+                      textDecoration="none!important"
+                    >
+                      <Button
+                        borderRadius="xl"
+                        colorScheme="blue"
+                        rightIcon={<ArrowForwardIcon />}
+                        my="2"
+                      >
+                        All characters
+                      </Button>
+                    </Link>
+                  </motion.div>
+                </AnimatePresence>
               </Flex>
               {/* CHARACTER CARDS END */}
             </motion.div>
