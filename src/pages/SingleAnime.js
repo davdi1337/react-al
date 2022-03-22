@@ -296,7 +296,7 @@ export const SingleAnime = () => {
               }}
             >
               <Flex
-                w="960px"
+                w={{ base: "300px", sm: "400px", md: "720px", lg: "960px" }}
                 bgColor={cardbg}
                 alignItems="center"
                 flexDirection="column"
@@ -307,20 +307,36 @@ export const SingleAnime = () => {
               >
                 <Heading>Characters</Heading>
                 <Flex
-                  flexDirection="row"
+                  flexDirection={{ base: "column", md: "row" }}
                   w="100%"
                   flexWrap="wrap"
                   justifyContent="space-between"
+                  alignItems={{ base: "center" }}
                   gap="2"
                   className="teszt"
                 >
                   {data.slice(0, 8).map((characters) => {
                     return (
                       <Flex
-                        flexDirection="row"
+                        flexDirection={{
+                          base: "column",
+                          sm: "column",
+                          md: "row",
+                          lg: "row",
+                        }}
                         gap="2"
                         bgColor={accordbg}
-                        minW="calc(960px / 2.5)"
+                        minW={{
+                          base: "calc(300px / 2)",
+                          sm: "calc(400px / 2)",
+                          md: "calc(720px / 2.5)",
+                          lg: "calc(960px / 2.5)",
+                        }}
+                        maxW={{
+                          base: "calc(300px / 2)",
+                          sm: "calc(400px / 2)",
+                        }}
+                        alignItems={{ base: "center", sm: "center" }}
                         borderRadius="xl"
                         overflow="hidden"
                         key={characters.character.mal_id}
@@ -328,7 +344,11 @@ export const SingleAnime = () => {
                         <Image
                           src={characters.character.images.jpg.image_url}
                           key={characters.character.images}
-                          w="100px"
+                          w={{
+                            base: "150px",
+                            sm: "calc(400px / 2)",
+                            md: "100px",
+                          }}
                           h="150px"
                           objectFit="cover"
                           borderRadius="lg"
@@ -337,6 +357,7 @@ export const SingleAnime = () => {
                           flexDirection="column"
                           justifyContent="center"
                           gap="2"
+                          textAlign={{ base: "center", md: "left" }}
                         >
                           <Text
                             color={charactername}

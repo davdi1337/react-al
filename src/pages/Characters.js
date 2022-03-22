@@ -39,7 +39,7 @@ function TopAnime() {
             transition={{ duration: 1, type: "spring", bounce: 0.4 }}
           >
             <Flex
-              w="960px"
+              w={{ base: "300px", sm: "400px", md: "720px", lg: "960px" }}
               bgColor={cardbg}
               alignItems="center"
               flexDirection="column"
@@ -64,16 +64,16 @@ function TopAnime() {
                 </Button>
               </Link>
               <Flex
-                flexDirection="row"
+                flexDirection={{ base: "column", md: "row" }}
                 w="100%"
                 flexWrap="wrap"
                 justifyContent="space-between"
+                alignItems={{ base: "center" }}
                 gap="2"
-                className="teszt"
               >
                 {data.map((characters) => {
                   return (
-                    <AnimatePresence key={characters.character.mal_id}>
+                    <AnimatePresence>
                       <motion.div
                         initial={{ y: 50, opacity: 0 }}
                         whileInView={{ y: 0, opacity: 1 }}
@@ -84,13 +84,27 @@ function TopAnime() {
                           duration: 0.8,
                           delay: 0.2,
                         }}
-                        key={characters.character.mal_id}
                       >
                         <Flex
-                          flexDirection="row"
+                          flexDirection={{
+                            base: "column",
+                            sm: "column",
+                            md: "row",
+                            lg: "row",
+                          }}
                           gap="2"
                           bgColor={accordbg}
-                          minW="calc(960px / 2.5)"
+                          minW={{
+                            base: "calc(300px / 2)",
+                            sm: "calc(400px / 2)",
+                            md: "calc(720px / 2.5)",
+                            lg: "calc(960px / 2.5)",
+                          }}
+                          maxW={{
+                            base: "calc(300px / 2)",
+                            sm: "calc(400px / 2)",
+                          }}
+                          alignItems={{ base: "center", sm: "center" }}
                           borderRadius="xl"
                           overflow="hidden"
                           key={characters.character.mal_id}
@@ -98,7 +112,11 @@ function TopAnime() {
                           <Image
                             src={characters.character.images.jpg.image_url}
                             key={characters.character.images}
-                            w="100px"
+                            w={{
+                              base: "150px",
+                              sm: "calc(400px / 2)",
+                              md: "100px",
+                            }}
                             h="150px"
                             objectFit="cover"
                             borderRadius="lg"
@@ -108,6 +126,7 @@ function TopAnime() {
                             justifyContent="center"
                             gap="2"
                             key={characters.character.mal_id}
+                            textAlign={{ base: "center", md: "left" }}
                           >
                             <Text
                               color={charactername}
