@@ -10,7 +10,7 @@ import {
   Link,
   TagLeftIcon,
 } from "@chakra-ui/react";
-import { FaStar, FaHashtag } from "react-icons/fa";
+import { FaStar, FaCalendarAlt } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
 function TopManga() {
@@ -79,13 +79,31 @@ function TopManga() {
                   <Text key={manga.title}>{manga.title}</Text>
 
                   <Flex gap="2">
-                    <Tag colorScheme="blue" size="md" borderRadius="full">
-                      <TagLeftIcon as={FaHashtag}></TagLeftIcon>
-                      <TagLabel>{manga.rank}</TagLabel>
+                    <Tag
+                      colorScheme="blue"
+                      size="md"
+                      borderRadius="full"
+                      key={manga.year}
+                    >
+                      <TagLeftIcon as={FaCalendarAlt}></TagLeftIcon>
+                      <TagLabel>{manga.year || "?"}</TagLabel>
                     </Tag>
-                    <Tag colorScheme="blue" size="md" borderRadius="full">
+                    <Tag
+                      colorScheme="blue"
+                      size="md"
+                      borderRadius="full"
+                      key={manga.score}
+                    >
                       <TagLeftIcon as={FaStar}></TagLeftIcon>
-                      <TagLabel>{manga.scored}</TagLabel>
+                      <TagLabel>{manga.score}</TagLabel>
+                    </Tag>
+                    <Tag
+                      colorScheme="blue"
+                      size="md"
+                      borderRadius="full"
+                      key={manga.type}
+                    >
+                      <TagLabel>{manga.type || "?"}</TagLabel>
                     </Tag>
                   </Flex>
                 </Flex>

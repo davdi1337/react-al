@@ -53,7 +53,7 @@ export const SingleAnime = () => {
         <Flex flexDirection="column" gap="5" alignItems="center">
           {/* ADD WEBSITE TITLE */}
           <Helmet>
-            <title>{search.singleData.data.title} - ReactMAL</title>
+            <title>{search.singleData.data.title} - ReactAL</title>
           </Helmet>
           {/* ADD WEBSITE TITLE */}
           <AnimatePresence>
@@ -307,13 +307,14 @@ export const SingleAnime = () => {
               >
                 <Heading>Characters</Heading>
                 <Flex
-                  flexDirection={{ base: "column", md: "row" }}
+                  flexDirection={{ base: "row", md: "row" }}
                   w="100%"
-                  flexWrap="wrap"
+                  flexWrap={{ base: "nowrap", md: "wrap" }}
                   justifyContent="space-between"
                   alignItems={{ base: "center" }}
                   gap="2"
-                  className="teszt"
+                  overflowX={{ base: "auto", md: "hidden" }}
+                  overflowY="hidden"
                 >
                   {data.slice(0, 8).map((characters) => {
                     return (
@@ -348,6 +349,7 @@ export const SingleAnime = () => {
                               base: "calc(300px / 2)",
                               sm: "calc(400px / 2)",
                             }}
+                            minH={{ base: "250px", md: "inherit" }}
                             alignItems={{ base: "center", sm: "center" }}
                             borderRadius="xl"
                             overflow="hidden"

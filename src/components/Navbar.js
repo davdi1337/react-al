@@ -69,7 +69,7 @@ function Navbar() {
               <Heading>
                 React
                 <Heading display="inline" color={headingcolor}>
-                  MAL
+                  AL
                 </Heading>
               </Heading>
             </Link>

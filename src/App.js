@@ -30,7 +30,7 @@ function App() {
   return (
     <>
       <Helmet>
-        <title>ReactMAL</title>
+        <title>ReactAL</title>
       </Helmet>
       <SearchContext.Provider
         value={{ search, animeData, setData, singleData, setSingle }}

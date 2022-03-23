@@ -10,7 +10,7 @@ import {
   TagLeftIcon,
   Link,
 } from "@chakra-ui/react";
-import { FaStar, FaHashtag } from "react-icons/fa";
+import { FaStar, FaCalendarAlt } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
 function TopAnime() {
@@ -89,10 +89,10 @@ function TopAnime() {
                       colorScheme="blue"
                       size="md"
                       borderRadius="full"
-                      key={anime.rank}
+                      key={anime.year}
                     >
-                      <TagLeftIcon as={FaHashtag}></TagLeftIcon>
-                      <TagLabel>{anime.rank}</TagLabel>
+                      <TagLeftIcon as={FaCalendarAlt}></TagLeftIcon>
+                      <TagLabel>{anime.year || "?"}</TagLabel>
                     </Tag>
                     <Tag
                       colorScheme="blue"
@@ -102,6 +102,14 @@ function TopAnime() {
                     >
                       <TagLeftIcon as={FaStar}></TagLeftIcon>
                       <TagLabel>{anime.score}</TagLabel>
+                    </Tag>
+                    <Tag
+                      colorScheme="blue"
+                      size="md"
+                      borderRadius="full"
+                      key={anime.type}
+                    >
+                      <TagLabel>{anime.type || "?"}</TagLabel>
                     </Tag>
                   </Flex>
                 </Flex>
