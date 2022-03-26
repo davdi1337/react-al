@@ -37,7 +37,7 @@ function Navbar() {
       search.animeData = res.data;
       localStorage.setItem("myData", JSON.stringify(res.data));
       navigate("/results");
-      console.log(res);
+      //console.log(res);
     });
   };
   return (
