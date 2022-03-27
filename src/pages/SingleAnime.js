@@ -255,7 +255,9 @@ export const SingleAnime = () => {
 
                 {/* DISPLAY TRAILER IF HAVE */}
                 {search.singleData.data.trailer.url ? (
-                  <Embed url={search.singleData.data.trailer.url} />
+                  <Box w="100%" borderRadius="lg" overflow="hidden">
+                    <Embed url={search.singleData.data.trailer.url} />
+                  </Box>
                 ) : (
                   <Flex
                     flexDirection="column"

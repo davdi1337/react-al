@@ -23,7 +23,7 @@ function App() {
   };
 
   const search = (searchTerm) => {
-    return fetch(`https://api.jikan.moe/v4/anime?letter=${searchTerm}`).then(
+    return fetch(`https://api.jikan.moe/v4/anime?q=${searchTerm}`).then(
       (response) => response.json()
     );
   };
