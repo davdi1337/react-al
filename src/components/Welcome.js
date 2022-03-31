@@ -43,7 +43,7 @@ function Welcome() {
               for any anime you want, see their informations, and many more
               things in the near future!
             </Text>
-            <Link href="#" textDecoration="none!important">
+            <Link href="/about" textDecoration="none!important">
               <Button colorScheme="blue" borderRadius="xl">
                 About this project
               </Button>
@@ -60,7 +60,6 @@ function Welcome() {
         bgSize="cover"
       >
         <Box
-          /* bgGradient="linear(to-r, gray.800 30%, transparent 70%)" */
           bgGradient={[`linear(to-r, ${gradientbg} 30%, transparent 70%)`]}
           w="inherit"
           h="inherit"

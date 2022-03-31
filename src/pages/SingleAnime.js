@@ -29,7 +29,6 @@ export const SingleAnime = () => {
   const [, pageUpdate] = useState(false);
   const params = useParams();
   const [data, setData] = useState([]);
-  const [episodes, setEpisodes] = useState([]);
   const charactername = useColorModeValue("blue.500", "blue.200");
   useEffect(async () => {
     if (Object.keys(search.singleData).length === 0) {
@@ -93,7 +92,7 @@ export const SingleAnime = () => {
                 >
                   <Flex flexDirection={{ base: "column", lg: "row" }} gap="2">
                     <Text fontWeight="bold">Title:</Text>
-                    <Text>{search.singleData.data.title || "?"}</Text>
+                    <Text>{search.singleData.data.title || "Unknown"}</Text>
                   </Flex>
                   <Flex
                     flexDirection={{
@@ -107,19 +106,19 @@ export const SingleAnime = () => {
                       {search.singleData.data.title_english ? (
                         <Text>{search.singleData.data.title_english}</Text>
                       ) : (
-                        "?"
+                        "Unknown"
                       )}
                     </Text>
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Season:</Text>
                     <Text textTransform="capitalize">
-                      {search.singleData.data.season || "?"}
+                      {search.singleData.data.season || "Unknown"}
                     </Text>
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Year:</Text>
-                    <Text>{search.singleData.data.year || "?"}</Text>
+                    <Text>{search.singleData.data.year || "Unknown"}</Text>
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Aired:</Text>
@@ -141,7 +140,7 @@ export const SingleAnime = () => {
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Episodes:</Text>
-                    <Text>{search.singleData.data.episodes || "?"}</Text>
+                    <Text>{search.singleData.data.episodes || "Unknown"}</Text>
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Studios:</Text>
@@ -191,11 +190,11 @@ export const SingleAnime = () => {
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Rank:</Text>
-                    <Text>{search.singleData.data.rank || "?"}</Text>
+                    <Text>{search.singleData.data.rank || "Unknown"}</Text>
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Score:</Text>
-                    <Text>{search.singleData.data.score || "?"}</Text>
+                    <Text>{search.singleData.data.score || "Unknown"}</Text>
                   </Flex>
                   <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
                     <Text fontWeight="bold">Source:</Text>
@@ -357,18 +356,22 @@ export const SingleAnime = () => {
                             overflow="hidden"
                             key={characters.character.mal_id}
                           >
-                            <Image
-                              src={characters.character.images.jpg.image_url}
-                              key={characters.character.images}
-                              w={{
-                                base: "150px",
-                                sm: "calc(400px / 2)",
-                                md: "100px",
-                              }}
-                              h="150px"
-                              objectFit="cover"
-                              borderRadius="lg"
-                            ></Image>
+                            <Link
+                              href={`/character/${characters.character.mal_id}`}
+                            >
+                              <Image
+                                src={characters.character.images.jpg.image_url}
+                                key={characters.character.images}
+                                w={{
+                                  base: "150px",
+                                  sm: "calc(400px / 2)",
+                                  md: "100px",
+                                }}
+                                h="150px"
+                                objectFit="cover"
+                                borderRadius="lg"
+                              ></Image>
+                            </Link>
                             <Flex
                               flexDirection="column"
                               justifyContent="center"

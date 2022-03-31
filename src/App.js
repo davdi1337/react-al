@@ -9,6 +9,8 @@ import { SingleAnime } from "./pages/SingleAnime";
 import Helmet from "react-helmet";
 import Characters from "./pages/Characters";
 import UpButton from "./components/UpButton";
+import SingleCharacter from "./pages/SingleCharacter";
+import About from "./pages/About";
 
 function App() {
   const [animeData, setAnimeData] = useState([]);
@@ -41,11 +43,17 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/about" element={<About />} />
             <Route exact path={"/anime/:id"} element={<SingleAnime />} />
             <Route
               exact
               path={"/anime/:id/characters"}
               element={<Characters />}
+            />
+            <Route
+              exact
+              path={"/character/:id"}
+              element={<SingleCharacter />}
             />
           </Routes>
         </BrowserRouter>

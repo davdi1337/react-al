@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
-import { Grid, Heading, useColorModeValue } from "@chakra-ui/react";
-import TopAnime from "../components/TopAnime";
+import { Flex, Grid, Text } from "@chakra-ui/react";
 import SeasonAnime from "../components/SeasonAnime";
-import TopManga from "../components/TopManga";
 import Welcome from "../components/Welcome";
 
 const Home = () => {
@@ -29,28 +27,7 @@ const Home = () => {
       minH="400px"
     >
       <Welcome />
-      <Heading display="flex" justifyContent="center" w="100%">
-        Season
-        <Heading color={useColorModeValue("blue.500", "blue.200")}>
-          &nbsp;Animes
-        </Heading>
-      </Heading>
       <SeasonAnime />
-      {/* <Heading display="flex" justifyContent="center" w="100%">
-        Top
-        <Heading color={useColorModeValue("blue.500", "blue.200")}>
-          &nbsp;Animes
-        </Heading>
-      </Heading> 
-      <TopAnime />
-      */}
-      <Heading mt="50px" display="flex" justifyContent="center" w="100%">
-        Top
-        <Heading color={useColorModeValue("blue.500", "blue.200")}>
-          &nbsp;Mangas
-        </Heading>
-      </Heading>
-      <TopManga />
     </Grid>
   );
 };

@@ -1,124 +1,105 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Flex,
   useColorModeValue,
   Image,
-  Tag,
-  TagLabel,
   Text,
-  Spinner,
-  TagLeftIcon,
   Link,
+  Skeleton,
+  Box,
+  Grid,
 } from "@chakra-ui/react";
-import { FaStar, FaCalendarAlt } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
-function SeasonAnime() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const SeasonAnime = () => {
+  const [data, setData] = useState(null);
   const cardbg = useColorModeValue("white", "gray.900");
   const [style, setStyle] = useState({ display: "none" });
 
   useEffect(() => {
-    fetch("https://api.jikan.moe/v4/seasons/now")
-      .then((response) => response.json())
-      .then((json) => {
-        //console.log(json);
-        setData(json.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    setTimeout(async () => {
+      const res = await fetch("https://api.jikan.moe/v4/seasons/now");
+      const anime = await res.json();
+      setData(anime.data);
+      console.log(anime.data);
+    }, 800); // wait 800ms to load data
   }, []);
-  if (loading) return <Spinner size="xl" />;
+
+  const ref = useRef(null);
+  const scroll = (scrollOffset) => {
+    ref.current.scrollLeft += scrollOffset;
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const open = () => setIsOpen(!isOpen);
+  const close = () => setIsOpen(false);
+
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1, type: "spring", bounce: 0.4 }}
+    <Box maxW="1300px" w="100%" px="5">
+      <Flex justifyContent="space-between" alignItems="center" w="100%" mb="5">
+        <Text textTransform="uppercase">Popular this season</Text>
+        <Link textDecoration="none!important" href="#">
+          <Text fontSize="sm">View all</Text>
+        </Link>
+      </Flex>
+
+      <Grid
+        gridGap={{ lg: "25px 30px", md: "25px 14px", base: "25px 12px" }}
+        gridTemplateColumns={{
+          lg: "repeat(auto-fill, 185px)",
+          sm: "repeat(auto-fill,minmax(135px,1fr))",
+          base: "repeat(auto-fill,minmax(105px,1fr))",
+        }}
+        justifyContent="space-between"
       >
-        <Flex flexWrap="wrap" justifyContent="center" mt="50px" gap="5">
-          {data.map((anime) => (
+        {data &&
+          data.slice(0, 12).map(({ mal_id, images, title }) => (
             <AnimatePresence>
               <motion.div
-                initial={{ y: 40, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-                viewport={{ once: true, amount: 0.5 }}
-                key={anime.mal_id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, type: "spring" }}
               >
-                <Flex
-                  flexDirection="column"
-                  alignItems="center"
-                  w="250px"
-                  key={anime.mal_id}
-                  bgColor={cardbg}
-                  justifyContent="space-between"
-                  borderRadius="xl"
-                  textAlign="center"
-                  gap="1"
-                  pb="2"
-                  boxShadow="xl"
-                  overflow="hidden"
-                  _hover={{ transform: "scale(1.05)" }}
-                  transition="transform 0.2s"
-                  minH="425px"
+                <Grid
+                  w="100%"
+                  gridTemplateRows="min-content auto"
+                  gridRowGap="2"
                 >
                   <Link
-                    w="100%"
-                    href={`/anime/${anime.mal_id}`}
+                    href={`/anime/${mal_id}`}
                     _focus={{ boxShadow: "none" }}
                   >
                     <Image
+                      src={images.jpg.large_image_url}
+                      borderRadius="xl"
+                      boxShadow="xl"
+                      h="250px"
                       w="100%"
-                      h="300px"
                       objectFit="cover"
-                      key={anime.mal_id}
-                      src={anime.images.jpg.large_image_url}
-                      alt={anime.title}
                     ></Image>
                   </Link>
-                  <Text key={anime.title}>{anime.title}</Text>
-
-                  <Flex gap="2" key={anime.rank}>
-                    <Tag
-                      colorScheme="blue"
-                      size="md"
-                      borderRadius="full"
-                      key={anime.year}
-                    >
-                      <TagLeftIcon as={FaCalendarAlt}></TagLeftIcon>
-                      <TagLabel>{anime.year || "?"}</TagLabel>
-                    </Tag>
-                    <Tag
-                      colorScheme="blue"
-                      size="md"
-                      borderRadius="full"
-                      key={anime.score}
-                    >
-                      <TagLeftIcon as={FaStar}></TagLeftIcon>
-                      <TagLabel>{anime.score}</TagLabel>
-                    </Tag>
-                    <Tag
-                      colorScheme="blue"
-                      size="md"
-                      borderRadius="full"
-                      key={anime.type}
-                    >
-                      <TagLabel>{anime.type || "?"}</TagLabel>
-                    </Tag>
-                  </Flex>
-                </Flex>
+                  <Text fontSize="sm">{title}</Text>
+                </Grid>
               </motion.div>
             </AnimatePresence>
           ))}
-        </Flex>
-      </motion.div>
-    </AnimatePresence>
+
+        {!data &&
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => (
+            <AnimatePresence>
+              <motion.div
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+              >
+                <Grid w="180px" gridTemplateRow="min-content auto">
+                  <Skeleton w="100%" h="270px" borderRadius="xl"></Skeleton>
+                </Grid>
+              </motion.div>
+            </AnimatePresence>
+          ))}
+      </Grid>
+    </Box>
   );
-}
+};
 export default SeasonAnime;

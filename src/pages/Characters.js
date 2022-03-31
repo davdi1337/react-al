@@ -13,8 +13,9 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
-function TopAnime() {
+function Characters() {
   const [data, setData] = useState([]);
+  const [characters, setCharacters] = useState([]);
   const cardbg = useColorModeValue("white", "gray.900");
   const accordbg = useColorModeValue("gray.100", "gray.800");
   const charactername = useColorModeValue("blue.500", "blue.200");
@@ -150,4 +151,4 @@ function TopAnime() {
     </>
   );
 }
-export default TopAnime;
+export default Characters;

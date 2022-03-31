@@ -6,6 +6,7 @@ import {
   TagLeftIcon,
   Text,
   TagLabel,
+  Grid,
   useColorModeValue,
   Link,
   Button,
@@ -34,60 +35,47 @@ export const AnimeList = () => {
       });
   };
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Flex
-          flexWrap="wrap"
-          justifyContent="center"
-          gap="5"
-          position="relative"
-          mt="100px"
-        >
-          {search.animeData.map(({ images, mal_id, title, score }) => (
-            <Box
-              key={title}
-              w="250px"
-              flexDirection="column"
-              justifyContent="space-between"
-              alignItems="center"
-              display="flex"
-              borderRadius="xl"
-              textAlign="center"
-              boxShadow="xl"
-              rowGap="5"
-              pb="2"
-              overflow="hidden"
-              bgColor={cardbg}
-            >
-              <Image
-                src={images.jpg.large_image_url}
-                key={mal_id}
-                alt={title}
-                w="100%"
-                h="300px"
-                objectFit="cover"
-              ></Image>
-              <Text paddingInline="2">{title}</Text>
-              <Tag size="md" colorScheme="blue" borderRadius="full">
-                <TagLeftIcon as={FaStar}></TagLeftIcon>
-                <TagLabel>{score || "?"}</TagLabel>
-              </Tag>
-              <Link
-                onClick={() => onClickHandler(mal_id)}
-                textDecoration="none!important"
-              >
-                <Button colorScheme="blue" borderRadius="xl">
-                  Details
-                </Button>
+    <Grid
+      gridTemplateColumns={{
+        lg: "repeat(auto-fill, 185px)",
+        sm: "repeat(auto-fill,minmax(150px,1fr))",
+        base: "repeat(auto-fill,minmax(105px,1fr))",
+      }}
+      gridGap={{ lg: "25px 30px", md: "25px 25px", base: "25px 20px" }}
+      justifyContent="space-between"
+      px="5"
+      mt="120px"
+    >
+      {search.animeData.map(({ title, images, mal_id }) => (
+        <AnimatePresence>
+          <motion.div
+            initial={{ y: -60, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+          >
+            <Grid w="100%" gridRowGap="2" gridTemplateRows="min-content auto">
+              <Link href={`/anime/${mal_id}`} _focus={{ boxShadow: "none" }}>
+                <Image
+                  src={images.jpg.large_image_url}
+                  h="250px"
+                  w="100%"
+                  objectFit="cover"
+                  borderRadius="xl"
+                  boxShadow="xl"
+                ></Image>
               </Link>
-            </Box>
-          ))}
-        </Flex>
-      </motion.div>
-    </AnimatePresence>
+              <Text
+                overflow="hidden"
+                whiteSpace="nowrap"
+                textOverflow="ellipsis"
+                fontSize="sm"
+              >
+                {title}
+              </Text>
+            </Grid>
+          </motion.div>
+        </AnimatePresence>
+      ))}
+    </Grid>
   );
 };
