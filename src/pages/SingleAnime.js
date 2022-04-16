@@ -705,6 +705,7 @@ export const SingleAnime = () => {
                                       flexDirection="column"
                                       justifyContent="space-between"
                                       alignItems="start"
+                                      textAlign="left"
                                     >
                                       <Link
                                         href={`/character/${character.mal_id}`}
@@ -748,6 +749,7 @@ export const SingleAnime = () => {
                                             flexDirection="column"
                                             justifyContent="space-between"
                                             alignItems="end"
+                                            textAlign="end"
                                           >
                                             <Text>{person.name}</Text>
                                             <Text
