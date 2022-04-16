@@ -21,7 +21,7 @@ const SeasonAnime = () => {
       const res = await fetch("https://api.jikan.moe/v4/seasons/now");
       const anime = await res.json();
       setData(anime.data);
-      console.log(anime.data);
+      /* console.log(anime.data); */
     }, 800); // wait 800ms to load data
   }, []);
 

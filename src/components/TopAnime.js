@@ -21,7 +21,7 @@ const TopAnime = () => {
       const res = await fetch("https://api.jikan.moe/v4/top/anime");
       const anime = await res.json();
       setData(anime.data);
-      console.log(anime.data);
+      /* console.log(anime.data); */
     }, 800); // wait 800ms to load data
   }, []);
 
