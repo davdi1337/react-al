@@ -529,6 +529,7 @@ export const SingleAnime = () => {
                                         .toUpperCase()
                                         .includes("japanese".toUpperCase())
                                     )
+                                    .slice(0, 1)
                                     ?.map(({ person, language }) => {
                                       return (
                                         <Grid gridArea="voice_actor">
@@ -605,7 +606,7 @@ export const SingleAnime = () => {
                                     <Image
                                       src={person.images.jpg.image_url}
                                       w="100%"
-                                      h="100%"
+                                      h="70px"
                                       gridArea="image"
                                       borderRadius="sm"
                                       objectFit="cover"
@@ -804,7 +805,7 @@ export const SingleAnime = () => {
                                 <Image
                                   src={person.images.jpg.image_url}
                                   w="100%"
-                                  h="100%"
+                                  h="70px"
                                   gridArea="image"
                                   borderRadius="sm"
                                   objectFit="cover"
