@@ -11,14 +11,14 @@ import {
 } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const TopAnime = () => {
+const UpcomingSeason = () => {
   const [data, setData] = useState(null);
   const cardbg = useColorModeValue("white", "gray.900");
   const [style, setStyle] = useState({ display: "none" });
 
   useEffect(() => {
     setTimeout(async () => {
-      const res = await fetch("https://api.jikan.moe/v4/top/anime");
+      const res = await fetch("https://api.jikan.moe/v4/seasons/upcoming");
       const anime = await res.json();
       setData(anime.data);
       console.log(anime.data);
@@ -38,7 +38,7 @@ const TopAnime = () => {
     <Box maxW="1300px" w="100%" px="5" mt="100">
       <Flex justifyContent="space-between" alignItems="center" w="100%" mb="5">
         <Text textTransform="uppercase" fontWeight="700">
-          Top anime
+          Upcoming next season
         </Text>
         <Link textDecoration="none!important" href="#">
           <Text fontSize="sm">View all</Text>
@@ -86,7 +86,6 @@ const TopAnime = () => {
                     overflow="hidden"
                     whiteSpace="nowrap"
                     textOverflow="ellipsis"
-                    fontWeight="500"
                   >
                     {title}
                   </Text>
@@ -113,4 +112,4 @@ const TopAnime = () => {
     </Box>
   );
 };
-export default TopAnime;
+export default UpcomingSeason;

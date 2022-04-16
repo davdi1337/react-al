@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
-import { Flex, Grid, Text } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import SeasonAnime from "../components/SeasonAnime";
 import Welcome from "../components/Welcome";
+import UpcomingSeason from "../components/UpcomingSeason";
+import TopAnime from "../components/TopAnime";
 
 const Home = () => {
   const search = useContext(SearchContext);
@@ -28,6 +30,8 @@ const Home = () => {
     >
       <Welcome />
       <SeasonAnime />
+      <UpcomingSeason />
+      <TopAnime />
     </Grid>
   );
 };

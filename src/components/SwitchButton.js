@@ -11,19 +11,20 @@ function SwitchButton() {
       <AnimatePresence exitBeforeEnter initial={false}>
         <motion.div
           key={useColorModeValue("light", "dark")}
-          initial={{ y: 20, opacity: 0 }}
+          initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -20, opacity: 0 }}
-          transition={{ duration: 0.2 }}
+          exit={{ y: 20, opacity: 0 }}
+          transition={{ duration: 0.2, type: "spring", bounce: 0.4 }}
         >
           <IconButton
-            icon={isDarkMode ? <FaMoon /> : <FaSun />}
+            icon={isDarkMode ? <FaSun /> : <FaMoon />}
             onClick={toggleColorMode}
             flex="1"
             align="right"
             colorScheme="blue"
             borderRadius="lg"
             mx="2"
+            size="md"
           ></IconButton>
         </motion.div>
       </AnimatePresence>

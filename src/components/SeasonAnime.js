@@ -37,17 +37,21 @@ const SeasonAnime = () => {
   return (
     <Box maxW="1300px" w="100%" px="5">
       <Flex justifyContent="space-between" alignItems="center" w="100%" mb="5">
-        <Text textTransform="uppercase">Popular this season</Text>
+        <Text textTransform="uppercase" fontWeight="700">
+          Popular this season
+        </Text>
         <Link textDecoration="none!important" href="#">
           <Text fontSize="sm">View all</Text>
         </Link>
       </Flex>
 
       <Grid
-        gridGap={{ lg: "25px 30px", md: "25px 14px", base: "25px 12px" }}
+        /* gridGap={{ lg: "25px 30px", md: "25px 14px", base: "25px 45px" }} */
+        gridRowGap={{ base: "5", md: "10" }}
+        gridColumnGap="5"
         gridTemplateColumns={{
           lg: "repeat(auto-fill, 185px)",
-          sm: "repeat(auto-fill,minmax(135px,1fr))",
+          sm: "repeat(auto-fill,minmax(155px,1fr))",
           base: "repeat(auto-fill,minmax(105px,1fr))",
         }}
         justifyContent="space-between"
@@ -78,7 +82,15 @@ const SeasonAnime = () => {
                       objectFit="cover"
                     ></Image>
                   </Link>
-                  <Text fontSize="sm">{title}</Text>
+                  <Text
+                    fontSize="sm"
+                    overflow="hidden"
+                    whiteSpace="nowrap"
+                    textOverflow="ellipsis"
+                    fontWeight="500"
+                  >
+                    {title}
+                  </Text>
                 </Grid>
               </motion.div>
             </AnimatePresence>

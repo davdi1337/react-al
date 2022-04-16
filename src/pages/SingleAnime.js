@@ -4,32 +4,59 @@ import {
   Image,
   Flex,
   Text,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Box,
   Heading,
   useColorModeValue,
-  Button,
   Link,
+  Grid,
+  Stack,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanel,
+  TabPanels,
+  Skeleton,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Embed from "react-embed";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowForwardIcon, CloseIcon } from "@chakra-ui/icons";
 import Helmet from "react-helmet";
 
 export const SingleAnime = () => {
   const search = useContext(SearchContext);
   const cardbg = useColorModeValue("white", "gray.900");
-  const accordbg = useColorModeValue("gray.100", "gray.800");
+  const stackbg = useColorModeValue("gray.100", "#1b202c"); // #171c26
+  const linkcolor = useColorModeValue("blue.600", "blue.300");
   const [, pageUpdate] = useState(false);
   const params = useParams();
-  const [data, setData] = useState([]);
-  const charactername = useColorModeValue("blue.500", "blue.200");
+  const [characters, setCharacters] = useState([]);
+  const [relations, setRelations] = useState([]);
+  const [staff, setStaff] = useState([]);
+  const [stats, setStats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [characterloading, setCharacterLoading] = useState(true);
+  const [staffloading, setStaffLoading] = useState(true);
+  const [statloading, setStatLoading] = useState(true);
+  const [trailerloading, setTrailerLoading] = useState(true);
+  const [relationskeletonstyle, setRelationSkeleton] = useState({
+    display: "block",
+  });
+  const [characterskeletonstyle, setCharacterSkeleton] = useState({
+    display: "block",
+  });
+  const [staffskeletonstyle, setStaffSkeleton] = useState({ display: "block" });
+  const [statskeletonstyle, setStatSkeleton] = useState({ display: "block" });
+  const [trailerskeletonstyle, setTrailerSkeleton] = useState({
+    display: "block",
+  });
+
+  const totalcolor = useColorModeValue("pink.500", "pink.200");
+  const onholdcolor = useColorModeValue("yellow.500", "yellow.200");
+  const watchingcolor = useColorModeValue("blue.500", "blue.200");
+  const completedcolor = useColorModeValue("purple.500", "purple.200");
+  const droppedcolor = useColorModeValue("red.500", "red.200");
+  const plantowatchcolor = useColorModeValue("green.500", "green.200");
   useEffect(async () => {
     if (Object.keys(search.singleData).length === 0) {
       const res = await axios.get(
@@ -40,392 +67,778 @@ export const SingleAnime = () => {
     }
   }, []);
   useEffect(() => {
-    fetch(`https://api.jikan.moe/v4/anime/${params.id}/characters`)
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json.data);
-      });
+    setTimeout(async () => {
+      const res = await fetch(
+        `https://api.jikan.moe/v4/anime/${params.id}/relations`
+      );
+      const relationsdata = await res.json();
+      setRelations(relationsdata.data);
+      setLoading(false);
+      setRelationSkeleton({ display: "none" });
+    }, 500);
   }, []);
+  useEffect(() => {
+    setTimeout(async () => {
+      const res = await fetch(
+        `https://api.jikan.moe/v4/anime/${params.id}/characters`
+      );
+      const characterdata = await res.json();
+      setCharacters(characterdata.data);
+      setCharacterLoading(false);
+      setCharacterSkeleton({ display: "none" });
+    }, 1000);
+  }, []);
+  useEffect(() => {
+    setTimeout(async () => {
+      const res = await fetch(
+        `https://api.jikan.moe/v4/anime/${params.id}/staff`
+      );
+      const staffdata = await res.json();
+      setStaff(staffdata.data);
+      setStaffLoading(false);
+      setStaffSkeleton({ display: "none" });
+    }, 1500);
+  }, []);
+  /* useEffect(() => {
+    setTimeout(async () => {
+      const res = await fetch(
+        `https://api.jikan.moe/v4/anime/${params.id}/statistics?`
+      );
+      const statsdata = await res.json();
+      setStats(statsdata.data);
+      setStatLoading(false);
+      setStatSkeleton({ display: "none" });
+    }, 2000);
+  }, []); */
   return (
-    <Flex mt="100px" alignItems="center" flexDirection="column">
+    <>
+      <Helmet title={`${search.singleData.data?.title} - ReactAL`}></Helmet>
       {Object.keys(search.singleData).length !== 0 ? (
-        <Flex flexDirection="column" gap="5" alignItems="center">
-          {/* ADD WEBSITE TITLE */}
-          <Helmet>
-            <title>{search.singleData.data.title} - ReactAL</title>
-          </Helmet>
-          {/* ADD WEBSITE TITLE */}
-          <AnimatePresence>
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+        <Flex
+          mt="100px"
+          justifyContent="center"
+          gap="10"
+          flexDirection={{ base: "column", lg: "row" }}
+          alignItems={{ base: "center", md: "center", lg: "inherit" }}
+          overflow={{ base: "hidden" }}
+        >
+          <Flex flexDirection="column" gap="10" alignItems="center">
+            <Box
+              w="250px"
+              bgColor={cardbg}
+              p="3"
+              borderRadius="lg"
+              boxShadow="2xl"
             >
-              <Flex
-                flexDirection="column"
-                w={{ base: "300px", sm: "400px", md: "500px", lg: "100%" }}
-                minW={{ base: "300px", sm: "400px", md: "500px", lg: "720px" }}
-                maxW="720px"
-                justifyContent="center"
-                alignItems="center"
-                gap="5"
-                bgColor={cardbg}
-                borderRadius="xl"
-                boxShadow="xl"
-                p={{ base: "0", sm: "5" }}
-                overflow="hidden"
-                textAlign="center"
-              >
-                <Image
-                  w="300px"
-                  h="400px"
-                  objectFit="cover"
-                  borderRadius={{ base: "none", sm: "lg" }}
-                  src={search.singleData.data.images.jpg.large_image_url}
-                  alt={search.singleData.data.title}
-                />
-                <Flex
-                  flexDirection="column"
-                  w="100%"
-                  alignItems="center"
-                  fontSize="large"
-                >
-                  <Flex flexDirection={{ base: "column", lg: "row" }} gap="2">
-                    <Text fontWeight="bold">Title:</Text>
-                    <Text>{search.singleData.data.title || "Unknown"}</Text>
-                  </Flex>
-                  <Flex
-                    flexDirection={{
-                      base: "column",
-                      lg: "row",
-                    }}
-                    gap="2"
-                  >
-                    <Text fontWeight="bold">English title:</Text>
-                    <Text>
-                      {search.singleData.data.title_english ? (
-                        <Text>{search.singleData.data.title_english}</Text>
-                      ) : (
-                        "Unknown"
-                      )}
-                    </Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Season:</Text>
-                    <Text textTransform="capitalize">
-                      {search.singleData.data.season || "Unknown"}
-                    </Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Year:</Text>
-                    <Text>{search.singleData.data.year || "Unknown"}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Aired:</Text>
-                    <Text>{search.singleData.data.aired.string}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Status:</Text>
-                    <Text>{search.singleData.data.status}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Broadcast:</Text>
-                    <Text>
-                      {search.singleData.data.broadcast.string || "?"}
-                    </Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Duration:</Text>
-                    <Text>{search.singleData.data.duration}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Episodes:</Text>
-                    <Text>{search.singleData.data.episodes || "Unknown"}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Studios:</Text>
-                    <Text>
-                      {search.singleData.data.studios.map(({ name }, index) => {
-                        if (
-                          index !==
-                          search.singleData.data.studios.length - 1
-                        ) {
-                          return (
-                            <Text key={name} display="inline-flex">
-                              {name},&nbsp;
-                            </Text>
-                          );
-                        } else {
-                          return (
-                            <Text key={name} display="inline-flex">
-                              {name}
-                            </Text>
-                          );
-                        }
-                      })}
-                    </Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Genres:</Text>
-                    <Text>
-                      {search.singleData.data.genres.map(({ name }, index) => {
-                        if (
-                          index !==
-                          search.singleData.data.genres.length - 1
-                        ) {
-                          return (
-                            <Text key={name} display="inline-flex">
-                              {name},&nbsp;
-                            </Text>
-                          );
-                        } else {
-                          return (
-                            <Text key={name} display="inline-flex">
-                              {name}
-                            </Text>
-                          );
-                        }
-                      })}
-                    </Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Rank:</Text>
-                    <Text>{search.singleData.data.rank || "Unknown"}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Score:</Text>
-                    <Text>{search.singleData.data.score || "Unknown"}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Source:</Text>
-                    <Text>{search.singleData.data.source}</Text>
-                  </Flex>
-                  <Flex flexDirection={{ base: "column", sm: "row" }} gap="2">
-                    <Text fontWeight="bold">Type:</Text>
-                    <Text>{search.singleData.data.type}</Text>
-                  </Flex>
-                </Flex>
-                <Accordion allowToggle w="100%" p={{ base: "2", sm: "0" }}>
-                  <AccordionItem
-                    borderRadius="xl"
-                    border="none"
-                    bgColor={accordbg}
-                    overflow="hidden"
-                  >
-                    <AccordionButton _focus={{ boxShadow: "none" }}>
-                      <Box flex="1" textAlign="left">
-                        Synopsis
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel>
-                      <Text>
-                        {search.singleData.data.synopsis || "Not yet added"}
-                      </Text>
-                    </AccordionPanel>
-                  </AccordionItem>
-                </Accordion>
-              </Flex>
-            </motion.div>
-          </AnimatePresence>
-          {/* ANIME CARD END */}
+              <Image
+                src={search.singleData.data.images.jpg.large_image_url}
+                w="100%"
+                h="315"
+                borderRadius="md"
+                objectFit="cover"
+                boxShadow="lg"
+              ></Image>
+            </Box>
 
-          <AnimatePresence>
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.8 }}
-              transition={{
-                duration: 0.8,
-                bounce: 0.5,
-                type: "spring",
-              }}
+            {/* ANIME DETAILS */}
+            <Box
+              w="300px"
+              bgColor={cardbg}
+              p="3"
+              borderRadius="lg"
+              display="flex"
+              flexDirection="column"
+              gap="3"
+              boxShadow="2xl"
             >
-              <Flex
-                flexDirection="column"
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
                 alignItems="center"
-                bgColor={cardbg}
-                p="5"
-                borderRadius="xl"
-                boxShadow="xl"
-                w={{ base: "300px", sm: "460px", md: "560px", lg: "960px" }}
+                p="2"
               >
-                <Heading my="5">Trailer</Heading>
-
-                {/* DISPLAY TRAILER IF HAVE */}
-                {search.singleData.data.trailer.url ? (
-                  <Box w="100%" borderRadius="lg" overflow="hidden">
-                    <Embed url={search.singleData.data.trailer.url} />
-                  </Box>
-                ) : (
-                  <Flex
-                    flexDirection="column"
-                    alignItems="center"
-                    textAlign="center"
-                  >
-                    <Flex
-                      bgColor="red.500"
-                      color="inherit"
-                      rounded="50px"
-                      w="50px"
-                      h="50px"
-                      justifyContent="center"
-                      alignItems="center"
-                      boxShadow={
-                        "0px 0px 25px -5px rgb(229 62 62 / 67%), 0 4px 5px -5px rgb(229 62 62 / 43%)"
-                      }
-                    >
-                      <CloseIcon boxSize="20px" />
-                    </Flex>
-                    <Text my="2">Trailer not found</Text>
-                  </Flex>
-                )}
-              </Flex>
-            </motion.div>
-          </AnimatePresence>
-          {/* TRAILER END */}
-
-          <AnimatePresence>
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{
-                duration: 0.8,
-                bounce: 0.4,
-                type: "spring",
-              }}
-            >
-              <Flex
-                w={{ base: "300px", sm: "400px", md: "720px", lg: "960px" }}
-                bgColor={cardbg}
+                <Text fontWeight="700">Aired</Text>
+                <Text m="0!important">
+                  {search.singleData.data.aired.string}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
                 alignItems="center"
-                flexDirection="column"
-                gap="2"
-                borderRadius="xl"
-                p="5"
-                boxShadow="xl"
+                p="2"
               >
-                <Heading>Characters</Heading>
-                <Flex
-                  flexDirection={{ base: "row", md: "row" }}
-                  w="100%"
-                  flexWrap={{ base: "nowrap", md: "wrap" }}
-                  justifyContent="space-between"
-                  alignItems={{ base: "center" }}
-                  gap="2"
-                  overflowX={{ base: "auto", md: "hidden" }}
-                  overflowY="hidden"
-                >
-                  {data.slice(0, 8).map((characters) => {
-                    return (
-                      <AnimatePresence>
-                        <motion.div
-                          initial={{ y: 50, opacity: 0 }}
-                          whileInView={{ y: 0, opacity: 1 }}
-                          viewport={{ once: true, amount: 0.4 }}
-                          transition={{
-                            type: "spring",
-                            bounce: 0.4,
-                            duration: 0.8,
-                            delay: 0.2,
-                          }}
-                        >
-                          <Flex
-                            flexDirection={{
-                              base: "column",
-                              sm: "column",
-                              md: "row",
-                              lg: "row",
-                            }}
-                            gap="2"
-                            bgColor={accordbg}
-                            minW={{
-                              base: "calc(300px / 2)",
-                              sm: "calc(400px / 2)",
-                              md: "calc(720px / 2.5)",
-                              lg: "calc(960px / 2.5)",
-                            }}
-                            maxW={{
-                              base: "calc(300px / 2)",
-                              sm: "calc(400px / 2)",
-                            }}
-                            minH={{ base: "250px", md: "inherit" }}
-                            alignItems={{ base: "center", sm: "center" }}
-                            borderRadius="xl"
-                            overflow="hidden"
-                            key={characters.character.mal_id}
-                          >
-                            <Link
-                              href={`/character/${characters.character.mal_id}`}
-                            >
-                              <Image
-                                src={characters.character.images.jpg.image_url}
-                                key={characters.character.images}
-                                w={{
-                                  base: "150px",
-                                  sm: "calc(400px / 2)",
-                                  md: "100px",
-                                }}
-                                h="150px"
-                                objectFit="cover"
-                                borderRadius="lg"
-                              ></Image>
-                            </Link>
-                            <Flex
-                              flexDirection="column"
-                              justifyContent="center"
-                              gap="2"
-                              textAlign={{ base: "center", md: "left" }}
-                            >
-                              <Text
-                                color={charactername}
-                                key={characters.character.name}
-                              >
-                                {characters.character.name}
-                              </Text>
-                              <Text key={characters.role}>
-                                {characters.role}
-                              </Text>
-                            </Flex>
-                          </Flex>
-                        </motion.div>
-                      </AnimatePresence>
-                    );
+                <Text fontWeight="700">Season</Text>
+                <Text m="0!important" textTransform="capitalize">
+                  {search.singleData.data.season || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Status</Text>
+                <Text m="0!important">
+                  {search.singleData.data.status || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Episodes</Text>
+                <Text m="0!important">
+                  {search.singleData.data.episodes || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Source</Text>
+                <Text m="0!important">
+                  {search.singleData.data.source || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Rank</Text>
+                <Text m="0!important">
+                  {search.singleData.data.rank || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Score</Text>
+                <Text m="0!important">
+                  {search.singleData.data.score || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Broadcast</Text>
+                <Text m="0!important">
+                  {search.singleData.data.broadcast.day || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+                flexWrap="wrap"
+              >
+                <Text fontWeight="700">Studios</Text>
+                <Flex m="0!important">
+                  {search.singleData.data.studios?.map(({ name }, index) => {
+                    if (index !== search.singleData.data.studios.length - 1)
+                      return <Text m="0!important">{name},&nbsp;</Text>;
+                    else {
+                      return <Text m="0!important">{name}</Text>;
+                    }
                   })}
                 </Flex>
-                <AnimatePresence>
-                  <motion.div
-                    initial={{ y: 50, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{
-                      duration: 0.8,
-                      bounce: 0.4,
-                      type: "spring",
-                    }}
-                  >
-                    <Link
-                      href={`/anime/${params.id}/characters`}
-                      textDecoration="none!important"
-                    >
-                      <Button
-                        borderRadius="xl"
-                        colorScheme="blue"
-                        rightIcon={<ArrowForwardIcon />}
-                        my="2"
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+                flexWrap="wrap"
+              >
+                <Text fontWeight="700">Genres</Text>
+                <Flex m="0!important" flexWrap="wrap">
+                  {search.singleData.data.genres?.map(({ name }, index) => {
+                    if (index !== search.singleData.data.genres.length - 1) {
+                      return <Text m="0!important">{name},&nbsp;</Text>;
+                    } else {
+                      return <Text m="0!important">{name}</Text>;
+                    }
+                  })}
+                </Flex>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+                flexWrap="wrap"
+              >
+                <Text fontWeight="700">Themes</Text>
+                <Flex m="0!important" flexWrap="wrap">
+                  {search.singleData.data.themes?.map(({ name }, index) => {
+                    if (index !== search.singleData.data.themes.length - 1) {
+                      return <Text m="0!important">{name},&nbsp;</Text>;
+                    } else {
+                      return <Text m="0!important">{name}</Text>;
+                    }
+                  })}
+                </Flex>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Favorites</Text>
+                <Text m="0!important">
+                  {search.singleData.data.favorites || "Unknown"}
+                </Text>
+              </Stack>
+              <Stack
+                bgColor={stackbg}
+                borderRadius="md"
+                fontSize="sm"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                p="2"
+              >
+                <Text fontWeight="700">Members</Text>
+                <Text m="0!important">
+                  {search.singleData.data.members || "Unknown"}
+                </Text>
+              </Stack>
+            </Box>
+          </Flex>
+          {/* ANIME DETAILS */}
+
+          {/* ANIME STATS */}
+          <Flex
+            w={{ lg: "1300px", md: "780px", base: "400px" }}
+            bgColor={cardbg}
+            borderRadius="lg"
+            flexDirection="column"
+            alignItems={{ base: "center", lg: "inherit" }}
+            p="5"
+            boxShadow="2xl"
+            mb="24"
+          >
+            <Heading fontSize="2xl">{search.singleData.data.title}</Heading>
+            <Text color="gray.500">{search.singleData.data.synopsis}</Text>
+
+            <Grid>
+              <Tabs
+                mt="50px"
+                /* w="100%" */ align="center"
+                variant="solid-rounded"
+              >
+                <TabList border="none">
+                  <Tab _focus={{ boxShadow: "none" }} mx="5" borderRadius="lg">
+                    Overview
+                  </Tab>
+                  <Tab _focus={{ boxShadow: "none" }} mx="5" borderRadius="lg">
+                    Characters
+                  </Tab>
+                  <Tab _focus={{ boxShadow: "none" }} mx="5" borderRadius="lg">
+                    Staff
+                  </Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel className="overview-tab">
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        viewport={{ once: false }}
+                        transition={{
+                          duration: 0.8,
+                          type: "spring",
+                          bounce: 0.4,
+                        }}
                       >
-                        All characters
-                      </Button>
-                    </Link>
-                  </motion.div>
-                </AnimatePresence>
-              </Flex>
-              {/* CHARACTER CARDS END */}
-            </motion.div>
-          </AnimatePresence>
+                        <Flex flexDirection="column" alignItems="start" mt="50">
+                          <Text fontWeight="700" mb="3">
+                            Relations
+                          </Text>
+                          <Skeleton
+                            w="400px"
+                            h="60px"
+                            isLoaded={!loading}
+                            style={relationskeletonstyle}
+                          ></Skeleton>
+                          {relations?.map(({ relation, entry }) => (
+                            <Flex>
+                              <Text color="gray.500">{relation}:&nbsp;</Text>
+                              {/* {entry?.map(({ mal_id, name }) => (
+                                <Link
+                                  href={`/anime/${mal_id}`}
+                                  textDecoration="none!important"
+                                  _hover={{ color: `${linkcolor}` }}
+                                >
+                                  {name}
+                                </Link>
+                              ))} */}
+                              {entry?.map(({ mal_id, name }, index) => {
+                                if (index !== entry.length - 1) {
+                                  return (
+                                    <Link
+                                      href={`/anime/${mal_id}`}
+                                      textDecoration="none!important"
+                                      _hover={{ color: `${linkcolor}` }}
+                                    >
+                                      {name},&nbsp;
+                                    </Link>
+                                  );
+                                } else {
+                                  return (
+                                    <Link
+                                      href={`/anime/${mal_id}`}
+                                      textDecoration="none!important"
+                                      _hover={{ color: `${linkcolor}` }}
+                                    >
+                                      {name}
+                                    </Link>
+                                  );
+                                }
+                              })}
+                            </Flex>
+                          ))}
+                        </Flex>
+
+                        <Flex mt="50" flexDirection="column" alignItems="start">
+                          <Text fontWeight="700" mb="3">
+                            Characters
+                          </Text>
+                          <Skeleton
+                            w="100%"
+                            h="300px"
+                            isLoaded={!characterloading}
+                            style={characterskeletonstyle}
+                          ></Skeleton>
+                          <Grid
+                            gridColumnGap={{ md: "10", lg: "10" }}
+                            gridRowGap="10"
+                            gridTemplateColumns={{
+                              base: "repeat(1, 1fr)",
+                              md: "repeat(2, 1fr)",
+                              lg: "repeat(2, 1fr)",
+                              xl: "repeat(3, 1fr)",
+                            }}
+                          >
+                            {characters
+                              ?.slice(0, 6)
+                              .map(({ character, role, voice_actors }) => (
+                                <Grid
+                                  gridTemplateAreas='"character voice_actor"'
+                                  bgColor={stackbg}
+                                  borderRadius="sm"
+                                  overflow="hidden"
+                                >
+                                  <Grid gridArea="character">
+                                    <Grid
+                                      gridTemplateAreas='"image content"'
+                                      gridTemplateColumns="60px auto"
+                                      gridGap="2"
+                                    >
+                                      <Link
+                                        href={`/character/${character.mal_id}`}
+                                        _focus={{ boxShadow: "none" }}
+                                      >
+                                        <Image
+                                          src={character.images.jpg.image_url}
+                                          gridArea="image"
+                                          w="100%"
+                                          h="100%"
+                                          borderRadius="sm"
+                                          objectFit="cover"
+                                        ></Image>
+                                      </Link>
+                                      <Grid
+                                        gridArea="content"
+                                        justifyContent="start"
+                                        alignContent="space-between"
+                                        textAlign="left"
+                                      >
+                                        <Link
+                                          href={`/character/${character.mal_id}`}
+                                          textDecoration="none!important"
+                                          _hover={{ color: `${linkcolor}` }}
+                                          _focus={{ boxShadow: "none" }}
+                                        >
+                                          <Text>{character.name}</Text>
+                                        </Link>
+                                        <Text
+                                          fontSize="smaller"
+                                          color="gray.500"
+                                        >
+                                          {role}
+                                        </Text>
+                                      </Grid>
+                                    </Grid>
+                                  </Grid>
+                                  {/* CHARACTER END */}
+                                  {voice_actors
+                                    .filter((voice_actors) =>
+                                      voice_actors.language
+                                        .toUpperCase()
+                                        .includes("japanese".toUpperCase())
+                                    )
+                                    ?.map(({ person, language }) => {
+                                      return (
+                                        <Grid gridArea="voice_actor">
+                                          <Grid
+                                            gridTemplateAreas='"content image"'
+                                            gridTemplateColumns="auto 60px"
+                                            gridGap="2"
+                                          >
+                                            <Image
+                                              src={person.images.jpg.image_url}
+                                              gridArea="image"
+                                              w="100%"
+                                              h="100%"
+                                              borderRadius="sm"
+                                              objectFit="cover"
+                                            ></Image>
+                                            <Grid
+                                              gridArea="content"
+                                              justifyContent="end"
+                                              alignContent="space-between"
+                                              textAlign="right"
+                                            >
+                                              <Text>{person.name}</Text>
+                                              <Text
+                                                fontSize="smaller"
+                                                color="gray.500"
+                                              >
+                                                {language}
+                                              </Text>
+                                            </Grid>
+                                          </Grid>
+                                        </Grid>
+                                      );
+                                    })}
+                                </Grid>
+                              ))}
+                          </Grid>
+                        </Flex>
+                        {/* CHARACTER DETAILS END */}
+
+                        <Flex mt="50" flexDirection="column" alignItems="start">
+                          <Text fontWeight="700" mb="3">
+                            Staff
+                          </Text>
+                          <Skeleton
+                            w="100%"
+                            h="100px"
+                            isLoaded={!staffloading}
+                            style={staffskeletonstyle}
+                          ></Skeleton>
+
+                          <Grid
+                            gridTemplateColumns={{
+                              base: "repeat(2, 1fr)",
+                              md: "repeat(2, 1fr)",
+                              lg: "repeat(3, 1fr)",
+                              xl: "repeat(4, 1fr)",
+                            }}
+                            gridColumnGap={{ base: "5", md: "10" }}
+                            gridRowGap="10"
+                          >
+                            {staff
+                              ?.slice(0, 5)
+                              ?.map(({ positions, person }) => {
+                                return (
+                                  <Grid
+                                    gridTemplateAreas='"image content"'
+                                    gridTemplateColumns="50px auto"
+                                    bgColor={stackbg}
+                                    borderRadius="sm"
+                                    overflow="hidden"
+                                    gridGap="2"
+                                  >
+                                    <Image
+                                      src={person.images.jpg.image_url}
+                                      w="100%"
+                                      h="100%"
+                                      gridArea="image"
+                                      borderRadius="sm"
+                                      objectFit="cover"
+                                    ></Image>
+                                    <Grid
+                                      gridArea="content"
+                                      alignContent="space-between"
+                                      justifyContent="start"
+                                      textAlign="left"
+                                    >
+                                      <Text>{person.name}</Text>
+                                      <Text
+                                        fontSize="sm"
+                                        color="gray.500"
+                                        whiteSpace="nowrap"
+                                        overflow="hidden"
+                                        textOverflow="ellipsis"
+                                        w="100%"
+                                      >
+                                        {positions}
+                                      </Text>
+                                    </Grid>
+                                  </Grid>
+                                );
+                              })}
+                          </Grid>
+                        </Flex>
+                        {/* STAFF END */}
+                        <Flex mt="50" flexDirection="column" alignItems="start">
+                          <Text fontWeight="700" mb="3">
+                            Trailer
+                          </Text>
+                          <Box
+                            w={{ base: "100%", lg: "50%" }}
+                            borderRadius="md"
+                            overflow="hidden"
+                          >
+                            <Embed
+                              url={search.singleData.data.trailer.url}
+                            ></Embed>
+                          </Box>
+                        </Flex>
+                      </motion.div>
+                    </AnimatePresence>
+                    {/* TRAILED END */}
+                  </TabPanel>
+                  <TabPanel className="characters-tab">
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        viewport={{ once: false }}
+                        transition={{
+                          duration: 0.8,
+                          type: "spring",
+                          bounce: 0.4,
+                        }}
+                      >
+                        <Grid
+                          gridColumnGap="10"
+                          gridRowGap="10"
+                          gridTemplateColumns={{
+                            base: "repeat(1, 1fr)",
+                            md: "repeat(2, 1fr)",
+                            lg: "repeat(3, 1fr)",
+                          }}
+                        >
+                          {characters?.map(
+                            ({ character, role, voice_actors }) => (
+                              <Grid
+                                gridTemplateAreas='"character voice_actor"'
+                                bgColor={stackbg}
+                                borderRadius="sm"
+                                overflow="hidden"
+                              >
+                                <Grid gridArea="character">
+                                  <Grid
+                                    gridTemplateAreas='"image content"'
+                                    gridTemplateColumns="60px auto"
+                                    gridGap="2"
+                                  >
+                                    <Link
+                                      href={`/character/${character.mal_id}`}
+                                      _focus={{ boxShadow: "none" }}
+                                    >
+                                      <Image
+                                        src={character.images.jpg.image_url}
+                                        gridArea="image"
+                                        w="100%"
+                                        h="100%"
+                                        borderRadius="sm"
+                                        objectFit="cover"
+                                      ></Image>
+                                    </Link>
+                                    <Stack
+                                      gridArea="content"
+                                      flexDirection="column"
+                                      justifyContent="space-between"
+                                      alignItems="start"
+                                    >
+                                      <Link
+                                        href={`/character/${character.mal_id}`}
+                                        textDecoration="none!important"
+                                        _hover={{ color: `${linkcolor}` }}
+                                        _focus={{ boxShadow: "none" }}
+                                      >
+                                        <Text>{character.name}</Text>
+                                      </Link>
+                                      <Text fontSize="smaller" color="gray.500">
+                                        {role}
+                                      </Text>
+                                    </Stack>
+                                  </Grid>
+                                </Grid>
+                                {/* CHARACTER END */}
+                                {voice_actors
+                                  .filter((voice_actors) =>
+                                    voice_actors.language
+                                      .toUpperCase()
+                                      .includes("japanese".toUpperCase())
+                                  )
+                                  ?.map(({ person, language }) => {
+                                    return (
+                                      <Grid gridArea="voice_actor">
+                                        <Grid
+                                          gridTemplateAreas='"content image"'
+                                          gridTemplateColumns="auto 60px"
+                                          gridGap="2"
+                                        >
+                                          <Image
+                                            src={person.images.jpg.image_url}
+                                            gridArea="image"
+                                            w="100%"
+                                            h="100%"
+                                            borderRadius="sm"
+                                            objectFit="cover"
+                                          ></Image>
+                                          <Stack
+                                            gridArea="content"
+                                            flexDirection="column"
+                                            justifyContent="space-between"
+                                            alignItems="end"
+                                          >
+                                            <Text>{person.name}</Text>
+                                            <Text
+                                              fontSize="smaller"
+                                              color="gray.500"
+                                            >
+                                              {language}
+                                            </Text>
+                                          </Stack>
+                                        </Grid>
+                                      </Grid>
+                                    );
+                                  })}
+                              </Grid>
+                            )
+                          )}
+                        </Grid>
+                      </motion.div>
+                    </AnimatePresence>
+                  </TabPanel>
+                  <TabPanel className="staff-tab">
+                    <AnimatePresence>
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        viewport={{ once: false }}
+                        transition={{
+                          duration: 0.8,
+                          type: "spring",
+                          bounce: 0.4,
+                        }}
+                      >
+                        <Grid
+                          gridTemplateColumns={{
+                            base: "repeat(1, 1fr)",
+                            md: "repeat(2, 1fr)",
+                            lg: "repeat(3, 1fr)",
+                          }}
+                          gridColumnGap="10"
+                          gridRowGap="10"
+                        >
+                          {staff?.map(({ person, positions }) => {
+                            return (
+                              <Grid
+                                gridTemplateAreas='"image content"'
+                                gridTemplateColumns="60px auto"
+                                bgColor={stackbg}
+                                borderRadius="sm"
+                                overflow="hidden"
+                                gridGap="2"
+                              >
+                                <Image
+                                  src={person.images.jpg.image_url}
+                                  w="100%"
+                                  h="100%"
+                                  gridArea="image"
+                                  borderRadius="sm"
+                                  objectFit="cover"
+                                ></Image>
+                                <Grid
+                                  gridArea="content"
+                                  alignContent="space-between"
+                                  justifyContent="start"
+                                  textAlign="left"
+                                >
+                                  <Text>{person.name}</Text>
+                                  <Text
+                                    fontSize="sm"
+                                    color="gray.500"
+                                    whiteSpace="nowrap"
+                                    overflow="hidden"
+                                    textOverflow="ellipsis"
+                                    w="100%"
+                                  >
+                                    {positions}
+                                  </Text>
+                                </Grid>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
+                      </motion.div>
+                    </AnimatePresence>
+                    {/* STAFF END */}
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </Grid>
+          </Flex>
         </Flex>
       ) : null}
-    </Flex>
+    </>
   );
 };
