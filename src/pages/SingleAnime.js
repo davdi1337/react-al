@@ -479,6 +479,7 @@ export const SingleAnime = () => {
                                   bgColor={stackbg}
                                   borderRadius="sm"
                                   overflow="hidden"
+                                  gridColumnGap="2"
                                 >
                                   <Grid gridArea="character">
                                     <Grid
@@ -681,6 +682,7 @@ export const SingleAnime = () => {
                                 bgColor={stackbg}
                                 borderRadius="sm"
                                 overflow="hidden"
+                                gridColumnGap="2"
                               >
                                 <Grid gridArea="character">
                                   <Grid
