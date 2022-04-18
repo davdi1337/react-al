@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { SearchContext } from "../context/search";
 import { AnimeList } from "../components/AnimeList";
-import { Heading } from "@chakra-ui/react";
 import Helmet from "react-helmet";
 
 const Results = () => {
