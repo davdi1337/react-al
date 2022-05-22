@@ -13,5 +13,10 @@ const config = {
   initialColorMode: "dark",
   useSystemColorMode: false,
 };
-const theme = extendTheme({ config, styles });
+
+const fonts = {
+  body: "'Inter', sans-serif",
+  heading: "'Inter', sans-serif",
+};
+const theme = extendTheme({ config, styles, fonts });
 export default theme;

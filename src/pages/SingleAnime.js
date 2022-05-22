@@ -25,8 +25,8 @@ import Helmet from "react-helmet";
 
 export const SingleAnime = () => {
   const search = useContext(SearchContext);
-  const cardbg = useColorModeValue("white", "gray.900");
-  const stackbg = useColorModeValue("gray.100", "#1b202c"); // #171c26
+  const cardbg = useColorModeValue("white", "gray.800");
+  const stackbg = useColorModeValue("gray.100", "gray.900"); // #1b202c
   const linkcolor = useColorModeValue("blue.600", "blue.300");
   const [, pageUpdate] = useState(false);
   const params = useParams();
@@ -75,7 +75,7 @@ export const SingleAnime = () => {
       setRelations(relationsdata.data);
       setLoading(false);
       setRelationSkeleton({ display: "none" });
-    }, 500);
+    }, 1000);
   }, []);
   useEffect(() => {
     setTimeout(async () => {
@@ -86,7 +86,7 @@ export const SingleAnime = () => {
       setCharacters(characterdata.data);
       setCharacterLoading(false);
       setCharacterSkeleton({ display: "none" });
-    }, 1000);
+    }, 3000);
   }, []);
   useEffect(() => {
     setTimeout(async () => {
@@ -97,7 +97,7 @@ export const SingleAnime = () => {
       setStaff(staffdata.data);
       setStaffLoading(false);
       setStaffSkeleton({ display: "none" });
-    }, 1500);
+    }, 5000);
   }, []);
   /* useEffect(() => {
     setTimeout(async () => {
@@ -108,7 +108,7 @@ export const SingleAnime = () => {
       setStats(statsdata.data);
       setStatLoading(false);
       setStatSkeleton({ display: "none" });
-    }, 2000);
+    }, 3500);
   }, []); */
   return (
     <>
@@ -127,14 +127,16 @@ export const SingleAnime = () => {
               w="250px"
               bgColor={cardbg}
               p="3"
-              borderRadius="lg"
+              borderRadius="xl"
+              border="1px solid"
+              borderColor="whiteAlpha.50"
               boxShadow="2xl"
             >
               <Image
                 src={search.singleData.data.images.jpg.large_image_url}
                 w="100%"
                 h="315"
-                borderRadius="md"
+                borderRadius="lg"
                 objectFit="cover"
                 boxShadow="lg"
               ></Image>
@@ -144,8 +146,10 @@ export const SingleAnime = () => {
             <Box
               w="300px"
               bgColor={cardbg}
+              border="1px solid"
+              borderColor="whiteAlpha.50"
               p="3"
-              borderRadius="lg"
+              borderRadius="xl"
               display="flex"
               flexDirection="column"
               gap="3"
@@ -362,7 +366,9 @@ export const SingleAnime = () => {
           <Flex
             w={{ lg: "1300px", md: "780px", base: "400px" }}
             bgColor={cardbg}
-            borderRadius="lg"
+            border="1px solid"
+            borderColor="whiteAlpha.50"
+            borderRadius="xl"
             flexDirection="column"
             alignItems={{ base: "center", lg: "inherit" }}
             p="5"
@@ -477,7 +483,7 @@ export const SingleAnime = () => {
                                 <Grid
                                   gridTemplateAreas='"character voice_actor"'
                                   bgColor={stackbg}
-                                  borderRadius="sm"
+                                  borderRadius="lg"
                                   overflow="hidden"
                                   gridColumnGap="2"
                                 >
@@ -496,7 +502,6 @@ export const SingleAnime = () => {
                                           gridArea="image"
                                           w="100%"
                                           h="100%"
-                                          borderRadius="sm"
                                           objectFit="cover"
                                         ></Image>
                                       </Link>
@@ -544,7 +549,6 @@ export const SingleAnime = () => {
                                               gridArea="image"
                                               w="100%"
                                               h="100%"
-                                              borderRadius="sm"
                                               objectFit="cover"
                                             ></Image>
                                             <Grid
@@ -594,13 +598,13 @@ export const SingleAnime = () => {
                           >
                             {staff
                               ?.slice(0, 5)
-                              ?.map(({ positions, person }) => {
+                              ?.map(({ positions, person }, index) => {
                                 return (
                                   <Grid
                                     gridTemplateAreas='"image content"'
                                     gridTemplateColumns="50px auto"
                                     bgColor={stackbg}
-                                    borderRadius="sm"
+                                    borderRadius="lg"
                                     overflow="hidden"
                                     gridGap="2"
                                   >
@@ -609,7 +613,6 @@ export const SingleAnime = () => {
                                       w="100%"
                                       h="70px"
                                       gridArea="image"
-                                      borderRadius="sm"
                                       objectFit="cover"
                                     ></Image>
                                     <Grid
@@ -627,7 +630,7 @@ export const SingleAnime = () => {
                                         textOverflow="ellipsis"
                                         w="100%"
                                       >
-                                        {positions}
+                                        {positions + (index ? "" : "")}
                                       </Text>
                                     </Grid>
                                   </Grid>
@@ -642,7 +645,7 @@ export const SingleAnime = () => {
                           </Text>
                           <Box
                             w={{ base: "100%", lg: "50%" }}
-                            borderRadius="md"
+                            borderRadius="lg"
                             overflow="hidden"
                           >
                             <Embed
@@ -680,7 +683,7 @@ export const SingleAnime = () => {
                               <Grid
                                 gridTemplateAreas='"character voice_actor"'
                                 bgColor={stackbg}
-                                borderRadius="sm"
+                                borderRadius="lg"
                                 overflow="hidden"
                                 gridColumnGap="2"
                               >
@@ -699,7 +702,6 @@ export const SingleAnime = () => {
                                         gridArea="image"
                                         w="100%"
                                         h="100%"
-                                        borderRadius="sm"
                                         objectFit="cover"
                                       ></Image>
                                     </Link>
@@ -744,7 +746,6 @@ export const SingleAnime = () => {
                                             gridArea="image"
                                             w="100%"
                                             h="100%"
-                                            borderRadius="sm"
                                             objectFit="cover"
                                           ></Image>
                                           <Stack
@@ -794,13 +795,13 @@ export const SingleAnime = () => {
                           gridColumnGap="10"
                           gridRowGap="10"
                         >
-                          {staff?.map(({ person, positions }) => {
+                          {staff?.map(({ person, positions }, index) => {
                             return (
                               <Grid
                                 gridTemplateAreas='"image content"'
                                 gridTemplateColumns="60px auto"
                                 bgColor={stackbg}
-                                borderRadius="sm"
+                                borderRadius="lg"
                                 overflow="hidden"
                                 gridGap="2"
                               >
@@ -809,7 +810,6 @@ export const SingleAnime = () => {
                                   w="100%"
                                   h="70px"
                                   gridArea="image"
-                                  borderRadius="sm"
                                   objectFit="cover"
                                 ></Image>
                                 <Grid
@@ -827,7 +827,7 @@ export const SingleAnime = () => {
                                     textOverflow="ellipsis"
                                     w="100%"
                                   >
-                                    {positions}
+                                    {positions + (index ? "" : "")}
                                   </Text>
                                 </Grid>
                               </Grid>

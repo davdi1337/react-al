@@ -13,7 +13,7 @@ import {
   MenuItem,
   Heading,
 } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../context/search";
 import SwitchButton from "./SwitchButton";
@@ -23,7 +23,8 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 function Navbar() {
   const navbarbg = useColorModeValue(
     "rgba(255, 255, 255, 0.8)",
-    "rgba(26, 32, 44, 0.8)"
+    // "rgba(26, 32, 44, 0.8)"
+    "rgba(22, 28, 36, 0.8)"
   );
   const headingcolor = useColorModeValue("blue.500", "blue.200");
 
@@ -40,17 +41,33 @@ function Navbar() {
       //console.log(res);
     });
   };
+  useEffect(() => {
+    var navbar = document.querySelector(".navbar");
+    window.onscroll = function () {
+      if (window.scrollY < 50) {
+        navbar.style.backdropFilter = "none";
+        navbar.style.boxShadow = "none";
+        navbar.style.height = "80px";
+      } else {
+        navbar.style.backdropFilter = "blur(10px)";
+        navbar.style.boxShadow = "var(--chakra-shadows-md)";
+        navbar.style.height = "60px";
+      }
+    };
+  });
   return (
     <div>
       <Box
+        className="navbar"
         w="100%"
-        h="60px"
+        h="80px"
         bgColor={navbarbg}
         zIndex="999"
-        backdropFilter="blur(10px) saturate(200%)"
+        // backdropFilter="blur(10px) saturate(200%)"
         position="fixed"
         top="0"
-        boxShadow="md"
+        // boxShadow="md"
+        transition="height 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, background-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
       >
         <Flex alignItems="center" h="100%" mx="3">
           <Flex
@@ -91,7 +108,7 @@ function Navbar() {
                   borderRadius="lg"
                   pr={{ base: "4", sm: "2.5rem", lg: "3rem" }}
                   variant="filled"
-                  bgColor={useColorModeValue("gray.200", "gray.900")}
+                  bgColor={useColorModeValue("gray.300", "gray.800")}
                   _placeholder={{
                     color: useColorModeValue("gray.700", "gray.500"),
                   }}
